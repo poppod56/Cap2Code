@@ -1,0 +1,13 @@
+# Xcode user settings
+xcuserdata/
+*.xcuserstate
+
+# Derived data & build
+DerivedData/
+build/
+
+# SwiftPM
+.swiftpm/
+
+# Misc
+.DS_Store
