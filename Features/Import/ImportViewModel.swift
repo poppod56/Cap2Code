@@ -27,12 +27,16 @@ final class ImportViewModel: ObservableObject {
     let store = JSONStore.shared
     let patterns = PatternStore.shared
 
-    func loadScreenshots() {
+    func fetchAlbums() async -> [PHAssetCollection] {
+        await photo.fetchAlbums()
+    }
+
+    func loadAssets(from collection: PHAssetCollection) {
         Task {
             do {
                 await MainActor.run { self.state = .loading }
                 try await photo.requestAccess()
-                let list = await photo.fetchAllScreenshots()
+                let list = await photo.fetchAssets(in: collection)
                 await MainActor.run {
                     self.assets = list
                     self.state = .loaded
