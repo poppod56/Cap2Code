@@ -6,6 +6,8 @@ protocol PhotoService {
     func fetchAllScreenshots() async -> [PHAsset]
     func requestThumbnail(for asset: PHAsset, targetSize: CGSize) async -> UIImage?
     func requestCGImage(for asset: PHAsset) async throws -> CGImage
+    func importImages(at urls: [URL]) async throws -> [PHAsset]
+    func deleteAssets(_ assets: [PHAsset]) async throws
 }
 
 final class PhotoServiceImpl: PhotoService {
@@ -64,6 +66,47 @@ final class PhotoServiceImpl: PhotoService {
                     return
                 }
                 cont.resume(returning: cg)
+            }
+        }
+    }
+
+    func importImages(at urls: [URL]) async throws -> [PHAsset] {
+        try await withCheckedThrowingContinuation { cont in
+            var identifiers: [String] = []
+            PHPhotoLibrary.shared().performChanges({
+                for u in urls {
+                    if let req = try? PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: u),
+                       let id = req.placeholderForCreatedAsset?.localIdentifier {
+                        identifiers.append(id)
+                    }
+                }
+            }) { success, error in
+                if let error = error {
+                    cont.resume(throwing: error)
+                    return
+                }
+                if success {
+                    let fetch = PHAsset.fetchAssets(withLocalIdentifiers: identifiers, options: nil)
+                    var assets: [PHAsset] = []
+                    fetch.enumerateObjects { a, _, _ in assets.append(a) }
+                    cont.resume(returning: assets)
+                } else {
+                    cont.resume(returning: [])
+                }
+            }
+        }
+    }
+
+    func deleteAssets(_ assets: [PHAsset]) async throws {
+        try await withCheckedThrowingContinuation { cont in
+            PHPhotoLibrary.shared().performChanges({
+                PHAssetChangeRequest.deleteAssets(assets as NSArray)
+            }) { _, error in
+                if let error = error {
+                    cont.resume(throwing: error)
+                } else {
+                    cont.resume(returning: ())
+                }
             }
         }
     }
