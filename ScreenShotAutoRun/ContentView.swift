@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  ScreenShotAutoRun
-//
-//  Created by poppod on 8/8/2568 BE.
-//
-
 import SwiftUI
 
 struct ContentView: View {
@@ -15,16 +8,20 @@ struct ContentView: View {
             NavigationStack {
                 ImportView(vm: importVM)
             }
-            .tabItem { Label("Import", systemImage: "square.and.arrow.down") }
+            .tabItem { Label("Scan", systemImage: "viewfinder") }
 
             NavigationStack {
                 ResultsView()
             }
             .tabItem { Label("Results", systemImage: "list.bullet.rectangle") }
+
+            NavigationStack {
+                SettingsView()
+            }
+            .tabItem { Label("Settings", systemImage: "gear") }
         }
     }
 }
-
 
 #Preview {
     ContentView()
