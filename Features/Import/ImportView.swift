@@ -1,8 +1,6 @@
 import SwiftUI
 import Photos
 import UIKit
-import PhotosUI
-import UniformTypeIdentifiers
 
 struct ImportView: View {
     @ObservedObject var vm: ImportViewModel
@@ -10,9 +8,6 @@ struct ImportView: View {
     @State private var showPreviewFull: Bool = false
     @State private var isSelecting: Bool = false
     @State private var selection: Set<String> = []
-    @State private var showPhotoPicker = false
-    @State private var pickerItems: [PhotosPickerItem] = []
-    @State private var showFileImporter = false
     @State private var showAlbumPicker = false
     @State private var albums: [PHAssetCollection] = []
     @State private var albumTitle: String = String(localized: "Screenshots")
@@ -108,27 +103,8 @@ struct ImportView: View {
                 }
             }
             ToolbarItem(placement: .topBarTrailing) {
-                Menu {
-                    Button("Photo Library") { showPhotoPicker = true }
-                    Button("Files") { showFileImporter = true }
-                } label: {
-                    Label("Import", systemImage: "square.and.arrow.down")
-                }
+                Button("Select Album") { showAlbumPicker = true }
             }
-        }
-        .photosPicker(isPresented: $showPhotoPicker, selection: $pickerItems, matching: .images)
-        .fileImporter(isPresented: $showFileImporter, allowedContentTypes: [.image], allowsMultipleSelection: true) { result in
-            switch result {
-            case .success(let urls):
-                vm.importFromFiles(urls: urls)
-            case .failure:
-                break
-            }
-        }
-        .onChange(of: pickerItems) { items in
-            let ids = items.compactMap { $0.itemIdentifier }
-            vm.importFromLibrary(identifiers: ids)
-            pickerItems = []
         }
         .sheet(isPresented: $showAlbumPicker) {
             NavigationStack {
