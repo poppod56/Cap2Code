@@ -22,7 +22,10 @@ final class PatternStore: ObservableObject {
 
     private static let builtIn: [RegexPattern] = [
         RegexPattern(id: UUID(), name: "AAA-1234", pattern: "(?i)[A-Z]{2,5}-\\d{3,7}", enabled: true, isDefault: true),
-        RegexPattern(id: UUID(), name: "AAA1234", pattern: "(?i)[A-Z]{2,5}\\d{3,7}", enabled: true, isDefault: true)
+        RegexPattern(id: UUID(), name: "AAA1234", pattern: "(?i)[A-Z]{2,5}\\d{3,7}", enabled: true, isDefault: true),
+        RegexPattern(id: UUID(), name: String(localized: "Generic ID"), pattern: "(?i)\\b([A-Z0-9]{2,8})[-_\\s·・]?([0-9]{2,8})\\b", enabled: true, isDefault: true),
+        RegexPattern(id: UUID(), name: String(localized: "Phone"), pattern: "\\b(?:\\+?\\d{1,3}[-\\s]?)?(?:\\d[-\\s]?){7,12}\\d\\b", enabled: true, isDefault: true),
+        RegexPattern(id: UUID(), name: String(localized: "Invoice"), pattern: "\\b\\d{2,4}-\\d{3,6}-\\d{2,4}\\b", enabled: true, isDefault: true)
     ]
 
     var enabledPatterns: [RegexPattern] { patterns.filter { $0.enabled } }

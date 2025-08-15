@@ -43,6 +43,45 @@ final class ImportViewModel: ObservableObject {
         }
     }
 
+    @MainActor
+    func importFromLibrary(identifiers: [String]) {
+        let fetch = PHAsset.fetchAssets(withLocalIdentifiers: identifiers, options: nil)
+        var list: [PHAsset] = []
+        fetch.enumerateObjects { a, _, _ in list.append(a) }
+        addAssets(list)
+    }
+
+    func importFromFiles(urls: [URL]) {
+        Task {
+            if let new = try? await photo.importImages(at: urls) {
+                await MainActor.run { self.addAssets(new) }
+            }
+        }
+    }
+
+    @MainActor
+    private func addAssets(_ new: [PHAsset]) {
+        guard !new.isEmpty else { return }
+        var existing = Set(assets.map { $0.localIdentifier })
+        for a in new {
+            if existing.insert(a.localIdentifier).inserted {
+                assets.append(a)
+            }
+        }
+        if state == .idle { state = .loaded }
+    }
+
+    @MainActor
+    func deleteAssets(ids: Set<String>) async {
+        let toDelete = assets.filter { ids.contains($0.localIdentifier) }
+        do {
+            try await photo.deleteAssets(toDelete)
+            assets.removeAll { ids.contains($0.localIdentifier) }
+            store.delete(Array(ids))
+        } catch {
+        }
+    }
+
     func processedItem(for asset: PHAsset) -> ProcessedAsset? {
         store.get(asset.localIdentifier)
     }

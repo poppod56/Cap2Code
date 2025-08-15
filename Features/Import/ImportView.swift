@@ -1,11 +1,18 @@
 import SwiftUI
 import Photos
 import UIKit
+import PhotosUI
+import UniformTypeIdentifiers
 
 struct ImportView: View {
     @ObservedObject var vm: ImportViewModel
     @State private var selectedLocalId: String?
     @State private var showPreviewFull: Bool = false
+    @State private var isSelecting: Bool = false
+    @State private var selection: Set<String> = []
+    @State private var showPhotoPicker = false
+    @State private var pickerItems: [PhotosPickerItem] = []
+    @State private var showFileImporter = false
 
     var body: some View {
         VStack {
@@ -22,10 +29,25 @@ struct ImportView: View {
                     LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: 3), spacing: 8) {
                         ForEach(vm.assets, id: \.localIdentifier) { asset in
                             Button {
-                                selectedLocalId = asset.localIdentifier
-                                showPreviewFull = true
+                                if isSelecting {
+                                    if selection.contains(asset.localIdentifier) {
+                                        selection.remove(asset.localIdentifier)
+                                    } else {
+                                        selection.insert(asset.localIdentifier)
+                                    }
+                                } else {
+                                    selectedLocalId = asset.localIdentifier
+                                    showPreviewFull = true
+                                }
                             } label: {
                                 AssetThumbnailView(asset: asset, photo: vm.photo)
+                                    .overlay(alignment: .topTrailing) {
+                                        if isSelecting {
+                                            Image(systemName: selection.contains(asset.localIdentifier) ? "checkmark.circle.fill" : "circle")
+                                                .foregroundStyle(.blue)
+                                                .padding(4)
+                                        }
+                                    }
                             }
                             .buttonStyle(.plain)
                             .contentShape(Rectangle())
@@ -37,24 +59,37 @@ struct ImportView: View {
                 .safeAreaInset(edge: .bottom) {
                     if !showPreviewFull {
                         VStack(spacing: 8) {
-                            if vm.state == .processing {
-                                ProgressView(value: vm.progress).padding(.horizontal)
-                                HStack {
-                                    Button(action: { vm.onPauseResumeTapped() }) {
-                                        Text(vm.pauseButtonTitle)
+                            if isSelecting {
+                                Button("Delete") {
+                                    let ids = selection
+                                    Task {
+                                        await vm.deleteAssets(ids: ids)
                                     }
-                                    .buttonStyle(.bordered)
-                                    Button(action: { vm.stopProcessing() }) {
-                                        Text("Stop")
-                                    }
-                                    .buttonStyle(.bordered)
+                                    selection.removeAll()
+                                    isSelecting = false
                                 }
+                                .disabled(selection.isEmpty)
+                                .buttonStyle(.borderedProminent)
+                            } else {
+                                if vm.state == .processing {
+                                    ProgressView(value: vm.progress).padding(.horizontal)
+                                    HStack {
+                                        Button(action: { vm.onPauseResumeTapped() }) {
+                                            Text(vm.pauseButtonTitle)
+                                        }
+                                        .buttonStyle(.bordered)
+                                        Button(action: { vm.stopProcessing() }) {
+                                            Text("Stop")
+                                        }
+                                        .buttonStyle(.bordered)
+                                    }
+                                }
+                                Button(vm.state == .processing ? "Scanning..." : "Scan") {
+                                    Task { await vm.processAll() }
+                                }
+                                .disabled(vm.state == .processing)
+                                .buttonStyle(.borderedProminent)
                             }
-                            Button(vm.state == .processing ? "Scanning..." : "Scan") {
-                                Task { await vm.processAll() }
-                            }
-                            .disabled(vm.state == .processing)
-                            .buttonStyle(.borderedProminent)
                         }
                         .padding()
                     }
@@ -62,6 +97,36 @@ struct ImportView: View {
             }
         }
         .navigationTitle("Screenshots")
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button(isSelecting ? "Done" : "Select") {
+                    if isSelecting { selection.removeAll() }
+                    isSelecting.toggle()
+                }
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                Menu {
+                    Button("Photo Library") { showPhotoPicker = true }
+                    Button("Files") { showFileImporter = true }
+                } label: {
+                    Label("Import", systemImage: "square.and.arrow.down")
+                }
+            }
+        }
+        .photosPicker(isPresented: $showPhotoPicker, selection: $pickerItems, matching: .images)
+        .fileImporter(isPresented: $showFileImporter, allowedContentTypes: [.image], allowsMultipleSelection: true) { result in
+            switch result {
+            case .success(let urls):
+                vm.importFromFiles(urls: urls)
+            case .failure:
+                break
+            }
+        }
+        .onChange(of: pickerItems) { items in
+            let ids = items.compactMap { $0.itemIdentifier }
+            vm.importFromLibrary(identifiers: ids)
+            pickerItems = []
+        }
         .sheet(isPresented: $showPreviewFull) {
             if let id = selectedLocalId, let asset = vm.asset(with: id) {
                 NavigationStack {
