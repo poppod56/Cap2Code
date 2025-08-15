@@ -50,6 +50,12 @@ final class JSONStore {
         save()
     }
 
+    func deleteAll() {
+        load()
+        cache.removeAll()
+        save()
+    }
+
     private func save() {
         if let data = try? JSONEncoder().encode(cache) {
             try? data.write(to: url, options: .atomic)

@@ -34,4 +34,15 @@ final class ResultsViewModel: ObservableObject {
             return nil
         }
     }
+
+    func delete(at offsets: IndexSet) {
+        let ids = offsets.map { cards[$0].assetId }
+        store.delete(ids)
+        cards.remove(atOffsets: offsets)
+    }
+
+    func clearAll() {
+        store.deleteAll()
+        cards.removeAll()
+    }
 }
