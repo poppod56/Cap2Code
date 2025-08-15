@@ -12,7 +12,7 @@ final class PhotoServiceImpl: PhotoService {
     func requestAccess() async throws {
         let status = await PHPhotoLibrary.requestAuthorization(for: .readWrite)
         guard status == .authorized || status == .limited else {
-            throw NSError(domain: "Photo", code: 1, userInfo: [NSLocalizedDescriptionKey:"ไม่อนุญาตให้เข้าถึง Photos"])
+            throw NSError(domain: "Photo", code: 1, userInfo: [NSLocalizedDescriptionKey:String(localized: "Photos access not granted")])
         }
     }
 
@@ -60,7 +60,7 @@ final class PhotoServiceImpl: PhotoService {
             opts.isNetworkAccessAllowed = true
             PHImageManager.default().requestImageDataAndOrientation(for: asset, options: opts) { data, _, _, _ in
                 guard let data, let ui = UIImage(data: data), let cg = ui.cgImage else {
-                    cont.resume(throwing: NSError(domain: "Photo", code: 2, userInfo: [NSLocalizedDescriptionKey:"แปลงเป็น CGImage ไม่ได้"]))
+                    cont.resume(throwing: NSError(domain: "Photo", code: 2, userInfo: [NSLocalizedDescriptionKey:String(localized: "Unable to convert to CGImage")]))
                     return
                 }
                 cont.resume(returning: cg)

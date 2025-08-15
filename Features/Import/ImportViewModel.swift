@@ -29,7 +29,7 @@ final class ImportViewModel: ObservableObject {
     private var processingTask: Task<Void, Never>?
 
     // Helper for UI
-    var pauseButtonTitle: String { isPaused ? "Resume" : "Pause" }
+    var pauseButtonTitle: String { isPaused ? String(localized: "Resume") : String(localized: "Pause") }
 
     let photo: PhotoService = PhotoServiceImpl()
     let ocr: OCRService = OCRServiceImpl()
