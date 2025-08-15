@@ -1,14 +1,6 @@
-//
-//  ImportViewModel.swift
-//  ScreenShotAutoRun
-//
-//  Created by poppod on 9/8/2568 BE.
-//
-
 import Foundation
 import Photos
 import SwiftUI
-
 
 final class ImportViewModel: ObservableObject {
     enum State: Equatable {
@@ -23,19 +15,17 @@ final class ImportViewModel: ObservableObject {
     @Published var assets: [PHAsset] = []
     @Published var progress: Double = 0
 
-    // MARK: - Processing Controls
     @Published var isPaused: Bool = false
     @Published var isCancelled: Bool = false
     private var processingTask: Task<Void, Never>?
 
-    // Helper for UI
     var pauseButtonTitle: String { isPaused ? String(localized: "Resume") : String(localized: "Pause") }
 
     let photo: PhotoService = PhotoServiceImpl()
     let ocr: OCRService = OCRServiceImpl()
-    let detector: AVCodeDetector = AVCodeDetectorImpl()
+    let detector: IDDetector = IDDetectorImpl()
     let store = JSONStore.shared
-    
+    let patterns = PatternStore.shared
 
     func loadScreenshots() {
         Task {
@@ -68,20 +58,13 @@ final class ImportViewModel: ObservableObject {
         var done = 0.0
 
         for p in items {
-            // re-run detector on stored OCR text only (no new OCR)
-            let codes = detector.findCodes(in: p.ocrText).map {
-                AVCodeMatchDTO(
-                    canonical: $0.canonical,
-                    prefix: $0.prefix,
-                    digits: $0.digits,
-                    confidence: $0.confidence
-                )
-            }
+            let ids = detector.find(in: p.ocrText, patterns: patterns.enabledPatterns)
+                .map { DetectedIDDTO(value: $0.value) }
             let updated = ProcessedAsset(
                 localId: p.localId,
                 createdAt: p.createdAt,
                 ocrText: p.ocrText,
-                codes: codes
+                ids: ids
             )
             store.upsert(updated)
             done += 1
@@ -92,19 +75,13 @@ final class ImportViewModel: ObservableObject {
 
     func redetectOne(localId: String) async {
         guard let p = store.get(localId) else { return }
-        let codes = detector.findCodes(in: p.ocrText).map {
-            AVCodeMatchDTO(
-                canonical: $0.canonical,
-                prefix: $0.prefix,
-                digits: $0.digits,
-                confidence: $0.confidence
-            )
-        }
+        let ids = detector.find(in: p.ocrText, patterns: patterns.enabledPatterns)
+            .map { DetectedIDDTO(value: $0.value) }
         let updated = ProcessedAsset(
             localId: p.localId,
             createdAt: p.createdAt,
             ocrText: p.ocrText,
-            codes: codes
+            ids: ids
         )
         store.upsert(updated)
     }
@@ -114,7 +91,6 @@ final class ImportViewModel: ObservableObject {
 
     @MainActor
     func processAll() async {
-        // Prevent re-entry if a task is already running
         guard processingTask == nil else { return }
 
         isPaused = false
@@ -122,7 +98,6 @@ final class ImportViewModel: ObservableObject {
         state = .processing
         progress = 0
 
-        // Snapshot list to process to keep iteration stable
         let toProcess = assets
         let total = Double(max(toProcess.count, 1))
         var done = 0.0
@@ -130,17 +105,14 @@ final class ImportViewModel: ObservableObject {
         processingTask = Task { [weak self] in
             guard let self = self else { return }
             for a in toProcess {
-                // Cancellation guard
                 if Task.isCancelled || self.isCancelled { break }
 
-                // Pause loop (cooperative)
                 while self.isPaused {
-                    try? await Task.sleep(nanoseconds: 100_000_000) // 0.1s
+                    try? await Task.sleep(nanoseconds: 100_000_000)
                     if Task.isCancelled || self.isCancelled { break }
                 }
                 if Task.isCancelled || self.isCancelled { break }
 
-                // Skip already processed
                 if self.store.get(a.localIdentifier) != nil {
                     done += 1
                     await MainActor.run { self.progress = done / total }
@@ -150,13 +122,11 @@ final class ImportViewModel: ObservableObject {
                 do {
                     let cg = try await self.photo.requestCGImage(for: a)
                     let res = try await self.ocr.recognizeText(cgImage: cg)
-                    let codes = self.detector.findCodes(in: res.fullText).map {
-                        AVCodeMatchDTO(canonical: $0.canonical, prefix: $0.prefix, digits: $0.digits, confidence: $0.confidence)
-                    }
-                    let item = ProcessedAsset(localId: a.localIdentifier, createdAt: a.creationDate ?? Date(), ocrText: res.fullText, codes: codes)
+                    let ids = self.detector.find(in: res.fullText, patterns: self.patterns.enabledPatterns)
+                        .map { DetectedIDDTO(value: $0.value) }
+                    let item = ProcessedAsset(localId: a.localIdentifier, createdAt: a.creationDate ?? Date(), ocrText: res.fullText, ids: ids)
                     self.store.upsert(item)
                 } catch {
-                    // Skip failures silently
                 }
 
                 done += 1
@@ -169,7 +139,6 @@ final class ImportViewModel: ObservableObject {
             }
         }
 
-        // Detach; caller doesn't await the loop
         _ = processingTask
     }
 
@@ -178,7 +147,6 @@ final class ImportViewModel: ObservableObject {
         guard processingTask != nil else { return }
         isPaused = true
     }
-    
 
     @MainActor
     func resumeProcessing() {

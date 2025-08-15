@@ -1,13 +1,12 @@
-"Import" = "Import";
+"Scan" = "Scan";
 "Results" = "Results";
 "Screenshots" = "Screenshots";
 "Loading Screenshots..." = "Loading Screenshots...";
 "Processing..." = "Processing...";
-"Process" = "Process";
 "Stop" = "Stop";
-"Detected Codes" = "Detected Codes";
-"Re-detect this image" = "Re-detect this image";
-"Copy code" = "Copy code";
+"Detected IDs" = "Detected IDs";
+"Re-scan this image" = "Re-scan this image";
+"Copy ID" = "Copy ID";
 "Copy OCR" = "Copy OCR";
 "OCR Text" = "OCR Text";
 "Preview" = "Preview";
@@ -17,6 +16,8 @@
 "Unable to convert to CGImage" = "Unable to convert to CGImage";
 "Resume" = "Resume";
 "Pause" = "Pause";
-"No code found" = "No code found";
+"No ID found" = "No ID found";
 "Review (Per Image)" = "Review (Per Image)";
 "Image Detail" = "Image Detail";
+"Search on the web" = "Search on the web";
+"Scanning..." = "Scanning...";

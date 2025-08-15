@@ -11,7 +11,7 @@ struct ImportView: View {
         VStack {
             switch vm.state {
             case .idle:
-                Button("Import") { vm.loadScreenshots() }
+                Button("Scan") { vm.loadScreenshots() }
                     .buttonStyle(.borderedProminent)
 
             case .loading:
@@ -34,7 +34,6 @@ struct ImportView: View {
                     }
                     .padding()
                 }
-                // NOTE: don't attach .sheet here to avoid layout/overlap issues
                 .safeAreaInset(edge: .bottom) {
                     if !showPreviewFull {
                         VStack(spacing: 8) {
@@ -51,7 +50,7 @@ struct ImportView: View {
                                     .buttonStyle(.bordered)
                                 }
                             }
-                            Button(vm.state == .processing ? "Processing..." : "Process") {
+                            Button(vm.state == .processing ? "Scanning..." : "Scan") {
                                 Task { await vm.processAll() }
                             }
                             .disabled(vm.state == .processing)
@@ -68,12 +67,11 @@ struct ImportView: View {
                 NavigationStack {
                     PreviewDetailView(vm: vm, localId: id, asset: asset, photo: vm.photo)
                 }
-                .interactiveDismissDisabled(false) // allow swipe-down to dismiss
+                .interactiveDismissDisabled(false)
             } else {
                 NavigationStack {
                     VStack(spacing: 16) {
                         Text("Image not available")
-                        // No explicit close button; user can swipe down to dismiss
                     }
                     .padding()
                 }
@@ -114,7 +112,7 @@ struct PreviewDetailView: View {
                 if let p = vm.processedItem(for: asset) {
                     Divider()
                     HStack {
-                        Text("Detected Codes").font(.headline)
+                        Text("Detected IDs").font(.headline)
                         Spacer()
                         Button(action: {
                             isRedetecting = true
@@ -127,7 +125,7 @@ struct PreviewDetailView: View {
                                 if isRedetecting {
                                     ProgressView().controlSize(.small)
                                 } else {
-                                    Text("Re-detect this image")
+                                    Text("Re-scan this image")
                                 }
                             }
                             .padding(.vertical, 6)
@@ -135,25 +133,27 @@ struct PreviewDetailView: View {
                         }
                         .buttonStyle(.bordered)
                     }
-                    if p.codes.isEmpty {
+                    if p.ids.isEmpty {
                         Text("—").foregroundStyle(.secondary)
                     } else {
-                        ForEach(p.codes, id: \.canonical) { c in
+                        ForEach(p.ids, id: \.value) { c in
                             HStack {
-                                Text(c.canonical)
+                                Text(c.value)
                                     .bold()
                                     .underline()
                                     .textSelection(.enabled)
                                     .onTapGesture {
-                                        if let url = searchURL(for: c.canonical) { openURL(url) }
+                                        if let url = searchURL(for: c.value) { openURL(url) }
                                     }
                                     .contextMenu {
-                                        Button("Copy code") {
-                                            UIPasteboard.general.string = c.canonical
+                                        Button("Copy ID") {
+                                            UIPasteboard.general.string = c.value
+                                        }
+                                        Button("Search on the web") {
+                                            if let url = searchURL(for: c.value) { openURL(url) }
                                         }
                                     }
                                 Spacer()
-                                Text("conf \(c.confidence)").font(.caption).foregroundStyle(.secondary)
                             }
                         }
                     }
@@ -184,8 +184,8 @@ struct PreviewDetailView: View {
         }
     }
 
-    private func searchURL(for code: String) -> URL? {
-        let q = code.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? code
+    private func searchURL(for id: String) -> URL? {
+        let q = id.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? id
         return URL(string: "https://www.google.com/search?q=\(q)")
     }
 }

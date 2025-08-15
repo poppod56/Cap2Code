@@ -1,10 +1,3 @@
-//
-//  JSONStore.swift
-//  ScreenShotAutoRun
-//
-//  Created by poppod on 9/8/2568 BE.
-//
-
 import Foundation
 
 struct ProcessedAsset: Codable, Identifiable {
@@ -12,14 +5,11 @@ struct ProcessedAsset: Codable, Identifiable {
     let localId: String
     let createdAt: Date
     let ocrText: String
-    let codes: [AVCodeMatchDTO]
+    let ids: [DetectedIDDTO]
 }
 
-struct AVCodeMatchDTO: Codable, Hashable {
-    let canonical: String
-    let prefix: String
-    let digits: String
-    let confidence: Int
+struct DetectedIDDTO: Codable, Hashable {
+    let value: String
 }
 
 final class JSONStore {

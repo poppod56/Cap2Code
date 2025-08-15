@@ -1,10 +1,3 @@
-//
-//  ReviewView.swift
-//  ScreenShotAutoRun
-//
-//  Created by poppod on 9/8/2568 BE.
-//
-
 import SwiftUI
 import Photos
 
@@ -19,10 +12,10 @@ struct ReviewView: View {
                 } label: {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(p.localId).font(.footnote).foregroundStyle(.secondary)
-                        if let first = p.codes.first {
-                            Text(first.canonical).font(.headline)
+                        if let first = p.ids.first {
+                            Text(first.value).font(.headline)
                         } else {
-                            Text("No code found").foregroundStyle(.secondary)
+                            Text("No ID found").foregroundStyle(.secondary)
                         }
                         Text(p.createdAt.formatted()).font(.caption2)
                     }
@@ -39,16 +32,12 @@ struct ReviewDetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 12) {
-                Text("Detected Codes").font(.headline)
-                if processed.codes.isEmpty {
+                Text("Detected IDs").font(.headline)
+                if processed.ids.isEmpty {
                     Text("—").foregroundStyle(.secondary)
                 } else {
-                    ForEach(processed.codes, id: \.self) { c in
-                        HStack {
-                            Text(c.canonical).bold()
-                            Spacer()
-                            Text("conf \(c.confidence)").font(.caption).foregroundStyle(.secondary)
-                        }
+                    ForEach(processed.ids, id: \.self) { c in
+                        Text(c.value).bold()
                     }
                 }
                 Divider()
