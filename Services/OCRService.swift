@@ -18,7 +18,7 @@ final class OCRServiceImpl: OCRService {
         let req = VNRecognizeTextRequest()
         req.recognitionLevel = .accurate
         req.usesLanguageCorrection = true
-        req.recognitionLanguages = ["en-US","ja-JP"] // เพิ่มได้
+        req.recognitionLanguages = ["en-US","th-TH","ja-JP","ko-KR"]
         let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
         try handler.perform([req])
 

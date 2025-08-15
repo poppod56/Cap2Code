@@ -15,7 +15,7 @@ struct ImportView: View {
                     .buttonStyle(.borderedProminent)
 
             case .loading:
-                ProgressView("กำลังโหลด Screenshots...")
+                ProgressView("Loading Screenshots...")
 
             case .loaded, .processing, .error(_):
                 ScrollView {
