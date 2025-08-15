@@ -3,7 +3,8 @@ import UIKit
 
 protocol PhotoService {
     func requestAccess() async throws
-    func fetchAllScreenshots() async -> [PHAsset]
+    func fetchAlbums() async -> [PHAssetCollection]
+    func fetchAssets(in collection: PHAssetCollection) async -> [PHAsset]
     func requestThumbnail(for asset: PHAsset, targetSize: CGSize) async -> UIImage?
     func requestCGImage(for asset: PHAsset) async throws -> CGImage
     func importImages(at urls: [URL]) async throws -> [PHAsset]
@@ -18,13 +19,20 @@ final class PhotoServiceImpl: PhotoService {
         }
     }
 
-    func fetchAllScreenshots() async -> [PHAsset] {
-        let col = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .smartAlbumScreenshots, options: nil)
-        guard let album = col.firstObject else { return [] }
+    func fetchAlbums() async -> [PHAssetCollection] {
+        var albums: [PHAssetCollection] = []
+        let smart = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .any, options: nil)
+        smart.enumerateObjects { c, _, _ in albums.append(c) }
+        let user = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: nil)
+        user.enumerateObjects { c, _, _ in albums.append(c) }
+        return albums
+    }
+
+    func fetchAssets(in collection: PHAssetCollection) async -> [PHAsset] {
         let opt = PHFetchOptions()
         opt.predicate = NSPredicate(format: "mediaType == %d", PHAssetMediaType.image.rawValue)
         opt.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
-        let res = PHAsset.fetchAssets(in: album, options: opt)
+        let res = PHAsset.fetchAssets(in: collection, options: opt)
         var arr: [PHAsset] = []
         res.enumerateObjects { a,_,_ in arr.append(a) }
         return arr

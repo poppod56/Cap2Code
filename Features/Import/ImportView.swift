@@ -13,16 +13,19 @@ struct ImportView: View {
     @State private var showPhotoPicker = false
     @State private var pickerItems: [PhotosPickerItem] = []
     @State private var showFileImporter = false
+    @State private var showAlbumPicker = false
+    @State private var albums: [PHAssetCollection] = []
+    @State private var albumTitle: String = String(localized: "Screenshots")
 
     var body: some View {
         VStack {
             switch vm.state {
             case .idle:
-                Button("Scan") { vm.loadScreenshots() }
+                Button("Select Album") { showAlbumPicker = true }
                     .buttonStyle(.borderedProminent)
 
             case .loading:
-                ProgressView("Loading Screenshots...")
+                ProgressView("Loading Photos...")
 
             case .loaded, .processing, .error(_):
                 ScrollView {
@@ -96,7 +99,7 @@ struct ImportView: View {
                 }
             }
         }
-        .navigationTitle("Screenshots")
+        .navigationTitle(albumTitle)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button(isSelecting ? "Done" : "Select") {
@@ -126,6 +129,21 @@ struct ImportView: View {
             let ids = items.compactMap { $0.itemIdentifier }
             vm.importFromLibrary(identifiers: ids)
             pickerItems = []
+        }
+        .sheet(isPresented: $showAlbumPicker) {
+            NavigationStack {
+                List(albums, id: \.localIdentifier) { album in
+                    Button(album.localizedTitle ?? "") {
+                        albumTitle = album.localizedTitle ?? String(localized: "Screenshots")
+                        showAlbumPicker = false
+                        vm.loadAssets(from: album)
+                    }
+                }
+                .navigationTitle(String(localized: "Select Album"))
+                .onAppear {
+                    Task { albums = await vm.fetchAlbums() }
+                }
+            }
         }
         .sheet(isPresented: $showPreviewFull) {
             if let id = selectedLocalId, let asset = vm.asset(with: id) {
