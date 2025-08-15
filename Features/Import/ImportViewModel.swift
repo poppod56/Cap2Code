@@ -100,10 +100,10 @@ final class ImportViewModel: ObservableObject {
 
         let toProcess = assets
         let total = Double(max(toProcess.count, 1))
-        var done = 0.0
 
-        processingTask = Task { [weak self] in
+        processingTask = Task { [weak self, toProcess, total] in
             guard let self = self else { return }
+            var done = 0.0
             for a in toProcess {
                 if Task.isCancelled || self.isCancelled { break }
 
