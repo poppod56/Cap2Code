@@ -31,38 +31,46 @@ final class PhotoServiceImpl: PhotoService {
     }
 
     func requestThumbnail(for asset: PHAsset, targetSize: CGSize) async -> UIImage? {
-        await withCheckedContinuation { cont in
+        await withCheckedContinuation { (cont: CheckedContinuation<UIImage?, Never>) in
             let opts = PHImageRequestOptions()
-            // Avoid multiple callbacks with degraded images
             opts.deliveryMode = .highQualityFormat
             opts.isSynchronous = false
             opts.isNetworkAccessAllowed = true
+
             var resumed = false
-            PHImageManager.default().requestImage(for: asset,
-                                                  targetSize: targetSize,
-                                                  contentMode: .aspectFill,
-                                                  options: opts) { img, info in
-                // If Photos still delivers degraded images, ignore them.
+            let id = PHImageManager.default().requestImage(
+                for: asset,
+                targetSize: targetSize,
+                contentMode: .aspectFill,
+                options: opts
+            ) { img, info in
                 let isDegraded = (info?[PHImageResultIsDegradedKey] as? NSNumber)?.boolValue ?? false
                 guard !isDegraded else { return }
-                // Ensure we only resume once
                 if !resumed {
                     resumed = true
                     cont.resume(returning: img)
                 }
             }
+            // optional: ถ้าต้องการ cancel เก็บ id ไว้แล้ว cancel ตอน deinit/ออกจอ
+            _ = id
         }
     }
 
     func requestCGImage(for asset: PHAsset) async throws -> CGImage {
-        try await withCheckedThrowingContinuation { cont in
+        try await withCheckedThrowingContinuation { (cont: CheckedContinuation<CGImage, Error>) in
             let opts = PHImageRequestOptions()
             opts.version = .current
             opts.isSynchronous = false
             opts.isNetworkAccessAllowed = true
+
             PHImageManager.default().requestImageDataAndOrientation(for: asset, options: opts) { data, _, _, _ in
-                guard let data, let ui = UIImage(data: data), let cg = ui.cgImage else {
-                    cont.resume(throwing: NSError(domain: "Photo", code: 2, userInfo: [NSLocalizedDescriptionKey:String(localized: "Unable to convert to CGImage")]))
+                guard let data,
+                      let ui = UIImage(data: data),
+                      let cg = ui.cgImage else {
+                    cont.resume(throwing: NSError(
+                        domain: "Photo", code: 2,
+                        userInfo: [NSLocalizedDescriptionKey: String(localized: "Unable to convert to CGImage")]
+                    ))
                     return
                 }
                 cont.resume(returning: cg)
@@ -71,7 +79,7 @@ final class PhotoServiceImpl: PhotoService {
     }
 
     func importImages(at urls: [URL]) async throws -> [PHAsset] {
-        try await withCheckedThrowingContinuation { cont in
+        try await withCheckedThrowingContinuation { (cont: CheckedContinuation<[PHAsset], Error>) in
             var identifiers: [String] = []
             PHPhotoLibrary.shared().performChanges({
                 for u in urls {
@@ -98,7 +106,7 @@ final class PhotoServiceImpl: PhotoService {
     }
 
     func deleteAssets(_ assets: [PHAsset]) async throws {
-        try await withCheckedThrowingContinuation { cont in
+        try await withCheckedThrowingContinuation { (cont: CheckedContinuation<Void, Error>) in
             PHPhotoLibrary.shared().performChanges({
                 PHAssetChangeRequest.deleteAssets(assets as NSArray)
             }) { _, error in

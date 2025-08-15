@@ -25,12 +25,12 @@
 
 /* Begin PBXFileReference section */
 		93F33F382E45D0C300869B87 /* CodeScan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodeScan.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		93F33F452E45D0C400869B87 /* CodeScanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScreenShotAutoRunTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		93F33F4F2E45D0C400869B87 /* CodeScanUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScreenShotAutoRunUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		93F33F452E45D0C400869B87 /* ScreenShotAutoRunTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScreenShotAutoRunTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		93F33F4F2E45D0C400869B87 /* ScreenShotAutoRunUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScreenShotAutoRunUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		93F33FA22E466D4600869B87 /* Exceptions for "Features" folder in "ScreenShotAutoRun" target */ = {
+		93F33FA22E466D4600869B87 /* Exceptions for "Features" folder in "CodeScan" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Import/ImportView.swift,
@@ -39,19 +39,19 @@
 				Results/ResultsViewModel.swift,
 				Review/ReviewView.swift,
 				Review/ReviewViewModel.swift,
-			                                Settings/SettingsView.swift,
-                        );
+				Settings/SettingsView.swift,
+			);
 			target = 93F33F372E45D0C300869B87 /* CodeScan */;
 		};
-		93F33FA92E466DB700869B87 /* Exceptions for "Persistence" folder in "ScreenShotAutoRun" target */ = {
+		93F33FA92E466DB700869B87 /* Exceptions for "Persistence" folder in "CodeScan" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				JSONStore.swift,
-			                                PatternStore.swift,
-                        );
+				PatternStore.swift,
+			);
 			target = 93F33F372E45D0C300869B87 /* CodeScan */;
 		};
-		93F33FAB2E466DBD00869B87 /* Exceptions for "Services" folder in "ScreenShotAutoRun" target */ = {
+		93F33FAB2E466DBD00869B87 /* Exceptions for "Services" folder in "CodeScan" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				OCRService.swift,
@@ -59,9 +59,10 @@
 			);
 			target = 93F33F372E45D0C300869B87 /* CodeScan */;
 		};
-		93F33FAE2E466DDB00869B87 /* Exceptions for "Shared" folder in "ScreenShotAutoRun" target */ = {
+		93F33FAE2E466DDB00869B87 /* Exceptions for "Shared" folder in "CodeScan" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				UI/ActivityView.swift,
 				UI/AssetThumbnailView.swift,
 				UI/SelectableTextView.swift,
 				Utils/IDDetector.swift,
@@ -72,17 +73,17 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		93F33F3A2E45D0C300869B87 /* CodeScan */ = {
+		93F33F3A2E45D0C300869B87 /* ScreenShotAutoRun */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = ScreenShotAutoRun;
 			sourceTree = "<group>";
 		};
-		93F33F482E45D0C400869B87 /* CodeScanTests */ = {
+		93F33F482E45D0C400869B87 /* ScreenShotAutoRunTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = ScreenShotAutoRunTests;
 			sourceTree = "<group>";
 		};
-		93F33F522E45D0C400869B87 /* CodeScanUITests */ = {
+		93F33F522E45D0C400869B87 /* ScreenShotAutoRunUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = ScreenShotAutoRunUITests;
 			sourceTree = "<group>";
@@ -95,7 +96,7 @@
 		93F33F942E466B7200869B87 /* Features */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				93F33FA22E466D4600869B87 /* Exceptions for "Features" folder in "ScreenShotAutoRun" target */,
+				93F33FA22E466D4600869B87 /* Exceptions for "Features" folder in "CodeScan" target */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -103,7 +104,7 @@
 		93F33F972E466B7600869B87 /* Services */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				93F33FAB2E466DBD00869B87 /* Exceptions for "Services" folder in "ScreenShotAutoRun" target */,
+				93F33FAB2E466DBD00869B87 /* Exceptions for "Services" folder in "CodeScan" target */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -111,7 +112,7 @@
 		93F33F992E466B7900869B87 /* Persistence */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				93F33FA92E466DB700869B87 /* Exceptions for "Persistence" folder in "ScreenShotAutoRun" target */,
+				93F33FA92E466DB700869B87 /* Exceptions for "Persistence" folder in "CodeScan" target */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -119,7 +120,7 @@
 		93F33FA02E466B7C00869B87 /* Shared */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				93F33FAE2E466DDB00869B87 /* Exceptions for "Shared" folder in "ScreenShotAutoRun" target */,
+				93F33FAE2E466DDB00869B87 /* Exceptions for "Shared" folder in "CodeScan" target */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -159,9 +160,9 @@
 				93F33F972E466B7600869B87 /* Services */,
 				93F33F942E466B7200869B87 /* Features */,
 				93F33F642E46190100869B87 /* App */,
-				93F33F3A2E45D0C300869B87 /* CodeScan */,
-				93F33F482E45D0C400869B87 /* CodeScanTests */,
-				93F33F522E45D0C400869B87 /* CodeScanUITests */,
+				93F33F3A2E45D0C300869B87 /* ScreenShotAutoRun */,
+				93F33F482E45D0C400869B87 /* ScreenShotAutoRunTests */,
+				93F33F522E45D0C400869B87 /* ScreenShotAutoRunUITests */,
 				93F33F392E45D0C300869B87 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -170,8 +171,8 @@
 			isa = PBXGroup;
 			children = (
 				93F33F382E45D0C300869B87 /* CodeScan.app */,
-				93F33F452E45D0C400869B87 /* CodeScanTests.xctest */,
-				93F33F4F2E45D0C400869B87 /* CodeScanUITests.xctest */,
+				93F33F452E45D0C400869B87 /* ScreenShotAutoRunTests.xctest */,
+				93F33F4F2E45D0C400869B87 /* ScreenShotAutoRunUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -181,7 +182,7 @@
 /* Begin PBXNativeTarget section */
 		93F33F372E45D0C300869B87 /* CodeScan */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 93F33F592E45D0C400869B87 /* Build configuration list for PBXNativeTarget "ScreenShotAutoRun" */;
+			buildConfigurationList = 93F33F592E45D0C400869B87 /* Build configuration list for PBXNativeTarget "CodeScan" */;
 			buildPhases = (
 				93F33F342E45D0C300869B87 /* Sources */,
 				93F33F352E45D0C300869B87 /* Frameworks */,
@@ -192,7 +193,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				93F33F3A2E45D0C300869B87 /* CodeScan */,
+				93F33F3A2E45D0C300869B87 /* ScreenShotAutoRun */,
 				93F33F642E46190100869B87 /* App */,
 			);
 			name = CodeScan;
@@ -202,7 +203,7 @@
 			productReference = 93F33F382E45D0C300869B87 /* CodeScan.app */;
 			productType = "com.apple.product-type.application";
 		};
-		93F33F442E45D0C400869B87 /* CodeScanTests */ = {
+		93F33F442E45D0C400869B87 /* ScreenShotAutoRunTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 93F33F5C2E45D0C400869B87 /* Build configuration list for PBXNativeTarget "ScreenShotAutoRunTests" */;
 			buildPhases = (
@@ -216,16 +217,16 @@
 				93F33F472E45D0C400869B87 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				93F33F482E45D0C400869B87 /* CodeScanTests */,
+				93F33F482E45D0C400869B87 /* ScreenShotAutoRunTests */,
 			);
 			name = ScreenShotAutoRunTests;
 			packageProductDependencies = (
 			);
 			productName = ScreenShotAutoRunTests;
-			productReference = 93F33F452E45D0C400869B87 /* CodeScanTests.xctest */;
+			productReference = 93F33F452E45D0C400869B87 /* ScreenShotAutoRunTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		93F33F4E2E45D0C400869B87 /* CodeScanUITests */ = {
+		93F33F4E2E45D0C400869B87 /* ScreenShotAutoRunUITests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 93F33F5F2E45D0C400869B87 /* Build configuration list for PBXNativeTarget "ScreenShotAutoRunUITests" */;
 			buildPhases = (
@@ -239,13 +240,13 @@
 				93F33F512E45D0C400869B87 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				93F33F522E45D0C400869B87 /* CodeScanUITests */,
+				93F33F522E45D0C400869B87 /* ScreenShotAutoRunUITests */,
 			);
 			name = ScreenShotAutoRunUITests;
 			packageProductDependencies = (
 			);
 			productName = ScreenShotAutoRunUITests;
-			productReference = 93F33F4F2E45D0C400869B87 /* CodeScanUITests.xctest */;
+			productReference = 93F33F4F2E45D0C400869B87 /* ScreenShotAutoRunUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -277,6 +278,9 @@
 			knownRegions = (
 				en,
 				Base,
+				ko,
+				ja,
+				th,
 			);
 			mainGroup = 93F33F2F2E45D0C300869B87;
 			minimizedProjectReferenceProxies = 1;
@@ -286,8 +290,8 @@
 			projectRoot = "";
 			targets = (
 				93F33F372E45D0C300869B87 /* CodeScan */,
-				93F33F442E45D0C400869B87 /* CodeScanTests */,
-				93F33F4E2E45D0C400869B87 /* CodeScanUITests */,
+				93F33F442E45D0C400869B87 /* ScreenShotAutoRunTests */,
+				93F33F4E2E45D0C400869B87 /* ScreenShotAutoRunUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -497,7 +501,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.poppod.codescan;
+				PRODUCT_BUNDLE_IDENTIFIER = com.poppod.captocode;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -527,7 +531,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.poppod.codescan;
+				PRODUCT_BUNDLE_IDENTIFIER = com.poppod.captocode;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -619,7 +623,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		93F33F592E45D0C400869B87 /* Build configuration list for PBXNativeTarget "ScreenShotAutoRun" */ = {
+		93F33F592E45D0C400869B87 /* Build configuration list for PBXNativeTarget "CodeScan" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				93F33F5A2E45D0C400869B87 /* Debug */,
