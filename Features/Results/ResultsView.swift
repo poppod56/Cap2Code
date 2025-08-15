@@ -6,48 +6,57 @@ struct ResultsView: View {
     @Environment(\.openURL) private var openURL
     @State private var shareURL: URL?
     @State private var showShare = false
+    @State private var showClearConfirm = false
 
     var body: some View {
-        List(vm.cards) { r in
-            VStack(alignment: .leading, spacing: 6) {
-                ForEach(r.ids, id: \.value) { c in
-                    HStack {
-                        Button(action: {
-                            if let url = searchURL(for: c.value) { openURL(url) }
-                        }) {
-                            Text(c.value)
-                                .font(.headline)
-                                .underline(true)
-                        }
-                        .contextMenu {
-                            Button("Copy ID") {
-                                UIPasteboard.general.string = c.value
-                            }
-                            Button("Search on the web") {
+        List {
+            ForEach(vm.cards) { r in
+                VStack(alignment: .leading, spacing: 6) {
+                    ForEach(r.ids, id: \.value) { c in
+                        HStack {
+                            Button(action: {
                                 if let url = searchURL(for: c.value) { openURL(url) }
+                            }) {
+                                Text(c.value)
+                                    .font(.headline)
+                                    .underline(true)
                             }
-                            Button("Copy OCR") {
-                                if let ocr = JSONStore.shared.get(r.assetId)?.ocrText {
-                                    UIPasteboard.general.string = ocr
+                            .contextMenu {
+                                Button("Copy ID") {
+                                    UIPasteboard.general.string = c.value
+                                }
+                                Button("Search on the web") {
+                                    if let url = searchURL(for: c.value) { openURL(url) }
+                                }
+                                Button("Copy OCR") {
+                                    if let ocr = JSONStore.shared.get(r.assetId)?.ocrText {
+                                        UIPasteboard.general.string = ocr
+                                    }
                                 }
                             }
+                            Spacer()
                         }
+                    }
+                    HStack {
+                        Text(r.assetId).font(.caption2).foregroundStyle(.secondary)
                         Spacer()
+                        Text(r.date.formatted(date: .abbreviated, time: .shortened)).font(.caption)
                     }
                 }
-                HStack {
-                    Text(r.assetId).font(.caption2).foregroundStyle(.secondary)
-                    Spacer()
-                    Text(r.date.formatted(date: .abbreviated, time: .shortened)).font(.caption)
-                }
             }
+            .onDelete(perform: vm.delete)
         }
         .navigationTitle("Detected IDs")
         .toolbar {
-            Button("Export CSV") {
-                if let url = vm.exportCSV() {
-                    shareURL = url
-                    showShare = true
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button("Clear") { showClearConfirm = true }
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Export CSV") {
+                    if let url = vm.exportCSV() {
+                        shareURL = url
+                        showShare = true
+                    }
                 }
             }
         }
@@ -55,6 +64,10 @@ struct ResultsView: View {
             if let url = shareURL {
                 ActivityView(activityItems: [url])
             }
+        }
+        .alert("Remove all results?", isPresented: $showClearConfirm) {
+            Button("Cancel", role: .cancel) {}
+            Button("Delete All", role: .destructive) { vm.clearAll() }
         }
         .onAppear { vm.load() }
     }
