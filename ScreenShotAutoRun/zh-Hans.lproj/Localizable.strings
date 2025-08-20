@@ -58,3 +58,9 @@
 
 // Selection functionality strings
 "Scan Selected" = "扫描选中项";
+
+// App Update strings
+"Update Available" = "更新可用";
+"Update" = "更新";
+"Later" = "稍后";
+"A new version (%@) is available. You are currently using version (%@)." = "新版本 (%@) 可用。您当前使用的是版本 (%@)。";

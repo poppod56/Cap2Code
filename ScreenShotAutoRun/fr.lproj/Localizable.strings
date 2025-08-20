@@ -58,3 +58,9 @@
 
 // Selection functionality strings
 "Scan Selected" = "Scanner sélectionnés";
+
+// App Update strings
+"Update Available" = "Mise à jour disponible";
+"Update" = "Mettre à jour";
+"Later" = "Plus tard";
+"A new version (%@) is available. You are currently using version (%@)." = "Une nouvelle version (%@) est disponible. Vous utilisez actuellement la version (%@).";

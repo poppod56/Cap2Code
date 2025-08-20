@@ -58,3 +58,9 @@
 
 // Selection functionality strings
 "Scan Selected" = "สแกนรายการที่เลือก";
+
+// App Update strings
+"Update Available" = "มีอัปเดต";
+"Update" = "อัปเดต";
+"Later" = "ภายหลัง";
+"A new version (%@) is available. You are currently using version (%@)." = "เวอร์ชันใหม่ (%@) พร้อมใช้งาน คุณกำลังใช้เวอร์ชัน (%@) อยู่";

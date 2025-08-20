@@ -58,3 +58,9 @@
 
 // Selection functionality strings
 "Scan Selected" = "مسح المحدد";
+
+// App Update strings
+"Update Available" = "تحديث متاح";
+"Update" = "تحديث";
+"Later" = "لاحقاً";
+"A new version (%@) is available. You are currently using version (%@)." = "إصدار جديد (%@) متاح. أنت تستخدم حالياً الإصدار (%@).";

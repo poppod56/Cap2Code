@@ -55,6 +55,7 @@
 		93F33FAB2E466DBD00869B87 /* Exceptions for "Services" folder in "CodeScan" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				AppUpdateService.swift,
 				OCRService.swift,
 				PhotoService.swift,
 			);

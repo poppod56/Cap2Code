@@ -58,3 +58,9 @@
 
 // Selection functionality strings
 "Scan Selected" = "Сканировать выбранные";
+
+// App Update strings
+"Update Available" = "Доступно обновление";
+"Update" = "Обновить";
+"Later" = "Позже";
+"A new version (%@) is available. You are currently using version (%@)." = "Доступна новая версия (%@). Вы используете версию (%@).";

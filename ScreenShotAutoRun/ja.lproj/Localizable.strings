@@ -58,3 +58,9 @@
 
 // Selection functionality strings
 "Scan Selected" = "選択項目をスキャン";
+
+// App Update strings
+"Update Available" = "アップデート利用可能";
+"Update" = "アップデート";
+"Later" = "後で";
+"A new version (%@) is available. You are currently using version (%@)." = "新しいバージョン (%@) が利用可能です。現在のバージョンは (%@) です。";
