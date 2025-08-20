@@ -28,6 +28,10 @@ final class ImportViewModel: ObservableObject {
     let store = JSONStore.shared
     let patterns = PatternStore.shared
     @Published var currentAlbumTitle: String = String(localized: "Screenshots")
+    
+    // Add camera data storage to ViewModel (persistent storage)
+    @Published var cameraImage: UIImage?
+    @Published var cameraResult: ProcessedAsset?
 
     func fetchAlbums() async -> [PHAssetCollection] {
         await photo.fetchAlbums()
@@ -138,11 +142,15 @@ final class ImportViewModel: ObservableObject {
     }
 
     func processCamera(image: UIImage) async -> ProcessedAsset? {
-        guard let cg = image.cgImage else { return nil }
+        guard let cg = image.cgImage else {
+            return nil
+        }
+        
         do {
             let res = try await ocr.recognizeText(cgImage: cg)
-            let ids = detector.find(in: res.fullText, patterns: patterns.enabledPatterns)
-                .map { DetectedIDDTO(value: $0.value) }
+            let enabledPatterns = patterns.enabledPatterns
+            let detectedResults = detector.find(in: res.fullText, patterns: enabledPatterns)
+            let ids = detectedResults.map { DetectedIDDTO(value: $0.value) }
             let localId = UUID().uuidString
             let item = ProcessedAsset(localId: localId, createdAt: Date(), ocrText: res.fullText, ids: ids, category: "Camera")
             store.upsert(item)

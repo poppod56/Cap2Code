@@ -32,3 +32,26 @@
 "Invoice" = "ใบแจ้งหนี้";
 "Select Album" = "เลือกอัลบั้ม";
 "Loading Photos..." = "กำลังโหลดรูปภาพ...";
+
+// Camera functionality strings
+"Camera" = "กล้อง";
+"Camera Permission Required" = "ต้องการสิทธิ์กล้อง";
+"Settings" = "การตั้งค่า";
+"Cancel" = "ยกเลิก";
+"Please enable camera access in Settings to take photos for text recognition." = "โปรดเปิดการเข้าถึงกล้องในการตั้งค่าเพื่อถ่ายภาพสำหรับการจดจำข้อความ";
+"Processing image..." = "กำลังประมวลผลภาพ...";
+"Analyzing text and patterns..." = "กำลังวิเคราะห์ข้อความและรูปแบบ...";
+"Processing Failed" = "การประมวลผลล้มเหลว";
+"Unable to process the captured image" = "ไม่สามารถประมวลผลภาพที่ถ่ายได้";
+"Try Again" = "ลองอีกครั้ง";
+"Close" = "ปิด";
+"Image Lost" = "ภาพหายไป";
+"The camera image was lost, but we have the processing results" = "ภาพจากกล้องหายไป แต่เรามีผลลัพธ์การประมวลผล";
+"Detected IDs:" = "ID ที่ตรวจพบ:";
+"OCR Text:" = "ข้อความ OCR:";
+"Camera Result" = "ผลลัพธ์กล้อง";
+"Camera Error" = "ข้อผิดพลาดกล้อง";
+"Something went wrong with camera processing" = "เกิดข้อผิดพลาดในการประมวลผลกล้อง";
+"Try Camera Again" = "ลองใช้กล้องอีกครั้ง";
+"No IDs detected" = "ไม่พบ ID";
+"No text detected" = "ไม่พบข้อความ";

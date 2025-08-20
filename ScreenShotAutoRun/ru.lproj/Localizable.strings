@@ -32,3 +32,26 @@
 "Invoice" = "Счет";
 "Select Album" = "Выберите альбом";
 "Loading Photos..." = "Загрузка фотографий ...";
+
+// Camera functionality strings
+"Camera" = "Камера";
+"Camera Permission Required" = "Требуется разрешение камеры";
+"Settings" = "Настройки";
+"Cancel" = "Отмена";
+"Please enable camera access in Settings to take photos for text recognition." = "Пожалуйста, включите доступ к камере в настройках для съемки фотографий для распознавания текста.";
+"Processing image..." = "Обработка изображения...";
+"Analyzing text and patterns..." = "Анализ текста и шаблонов...";
+"Processing Failed" = "Обработка не удалась";
+"Unable to process the captured image" = "Невозможно обработать захваченное изображение";
+"Try Again" = "Попробовать снова";
+"Close" = "Закрыть";
+"Image Lost" = "Изображение потеряно";
+"The camera image was lost, but we have the processing results" = "Изображение с камеры было потеряно, но у нас есть результаты обработки";
+"Detected IDs:" = "Обнаруженные ID:";
+"OCR Text:" = "OCR текст:";
+"Camera Result" = "Результат камеры";
+"Camera Error" = "Ошибка камеры";
+"Something went wrong with camera processing" = "Что-то пошло не так с обработкой камеры";
+"Try Camera Again" = "Попробовать камеру снова";
+"No IDs detected" = "ID не обнаружены";
+"No text detected" = "Текст не обнаружен";

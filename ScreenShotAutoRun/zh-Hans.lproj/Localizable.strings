@@ -32,3 +32,26 @@
 "Invoice" = "发票";
 "Select Album" = "选择专辑";
 "Loading Photos..." = "加载照片...";
+
+// Camera functionality strings
+"Camera" = "相机";
+"Camera Permission Required" = "需要相机权限";
+"Settings" = "设置";
+"Cancel" = "取消";
+"Please enable camera access in Settings to take photos for text recognition." = "请在设置中启用相机访问以拍摄照片进行文本识别。";
+"Processing image..." = "处理图像...";
+"Analyzing text and patterns..." = "分析文本和模式...";
+"Processing Failed" = "处理失败";
+"Unable to process the captured image" = "无法处理捕获的图像";
+"Try Again" = "再试一次";
+"Close" = "关闭";
+"Image Lost" = "图像丢失";
+"The camera image was lost, but we have the processing results" = "相机图像丢失了，但我们有处理结果";
+"Detected IDs:" = "检测到的ID：";
+"OCR Text:" = "OCR文本：";
+"Camera Result" = "相机结果";
+"Camera Error" = "相机错误";
+"Something went wrong with camera processing" = "相机处理出了问题";
+"Try Camera Again" = "再次尝试相机";
+"No IDs detected" = "未检测到ID";
+"No text detected" = "未检测到文本";

@@ -32,3 +32,26 @@
 "Invoice" = "請求書";
 "Select Album" = "アルバムを選択";
 "Loading Photos..." = "写真を読み込み中...";
+
+// Camera functionality strings
+"Camera" = "カメラ";
+"Camera Permission Required" = "カメラ許可が必要";
+"Settings" = "設定";
+"Cancel" = "キャンセル";
+"Please enable camera access in Settings to take photos for text recognition." = "テキスト認識のための写真撮影には、設定でカメラアクセスを有効にしてください。";
+"Processing image..." = "画像を処理中...";
+"Analyzing text and patterns..." = "テキストとパターンを分析中...";
+"Processing Failed" = "処理に失敗しました";
+"Unable to process the captured image" = "キャプチャした画像を処理できません";
+"Try Again" = "再試行";
+"Close" = "閉じる";
+"Image Lost" = "画像が失われました";
+"The camera image was lost, but we have the processing results" = "カメラ画像は失われましたが、処理結果があります";
+"Detected IDs:" = "検出されたID:";
+"OCR Text:" = "OCRテキスト:";
+"Camera Result" = "カメラ結果";
+"Camera Error" = "カメラエラー";
+"Something went wrong with camera processing" = "カメラ処理で問題が発生しました";
+"Try Camera Again" = "カメラを再試行";
+"No IDs detected" = "IDが検出されませんでした";
+"No text detected" = "テキストが検出されませんでした";

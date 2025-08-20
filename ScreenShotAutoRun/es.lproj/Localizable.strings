@@ -32,3 +32,26 @@
 "Invoice" = "Factura";
 "Select Album" = "Álbum seleccionado";
 "Loading Photos..." = "Cargando fotos ...";
+
+// Camera functionality strings
+"Camera" = "Cámara";
+"Camera Permission Required" = "Permiso de cámara requerido";
+"Settings" = "Configuración";
+"Cancel" = "Cancelar";
+"Please enable camera access in Settings to take photos for text recognition." = "Por favor, habilite el acceso a la cámara en Configuración para tomar fotos para el reconocimiento de texto.";
+"Processing image..." = "Procesando imagen...";
+"Analyzing text and patterns..." = "Analizando texto y patrones...";
+"Processing Failed" = "Procesamiento fallido";
+"Unable to process the captured image" = "No se puede procesar la imagen capturada";
+"Try Again" = "Intentar de nuevo";
+"Close" = "Cerrar";
+"Image Lost" = "Imagen perdida";
+"The camera image was lost, but we have the processing results" = "La imagen de la cámara se perdió, pero tenemos los resultados del procesamiento";
+"Detected IDs:" = "IDs detectados:";
+"OCR Text:" = "Texto OCR:";
+"Camera Result" = "Resultado de la cámara";
+"Camera Error" = "Error de cámara";
+"Something went wrong with camera processing" = "Algo salió mal con el procesamiento de la cámara";
+"Try Camera Again" = "Intentar cámara de nuevo";
+"No IDs detected" = "No se detectaron IDs";
+"No text detected" = "No se detectó texto";

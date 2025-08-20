@@ -1,6 +1,7 @@
 import SwiftUI
 import Photos
 import UIKit
+import AVFoundation
 
 struct ImportView: View {
     @ObservedObject var vm: ImportViewModel
@@ -12,24 +13,31 @@ struct ImportView: View {
     @State private var albums: [PHAssetCollection] = []
     @State private var albumTitle: String = String(localized: "Screenshots")
     @State private var showCamera = false
-    @State private var isCameraProcessing = false
-    @State private var cameraImage: UIImage?
-    @State private var cameraResult: ProcessedAsset?
     @State private var showCameraPreview = false
+    @State private var isCameraProcessing = false
+    @State private var cameraPermissionStatus: AVAuthorizationStatus = AVCaptureDevice.authorizationStatus(for: .video)
+    @State private var showPermissionAlert = false
 
     var body: some View {
         VStack {
             switch vm.state {
             case .idle:
-                VStack(spacing: 16) {
-                    Button("Select Album") { showAlbumPicker = true }
+                VStack(spacing: 12) {
+                    Button(String(localized: "Select Album")) { showAlbumPicker = true }
                         .buttonStyle(.borderedProminent)
-                    Button("Camera") { showCamera = true }
-                        .buttonStyle(.bordered)
+                    
+                    Button {
+                        checkCameraPermissionAndOpenCamera()
+                    } label: {
+                        Image(systemName: "camera")
+                            .font(.title2)
+                    }
+                    .buttonStyle(.bordered)
+                    .accessibilityLabel(String(localized: "Camera"))
                 }
 
             case .loading:
-                ProgressView("Loading Photos...")
+                ProgressView(String(localized: "Loading Photos..."))
 
             case .loaded, .processing, .error(_):
                 ScrollView {
@@ -67,7 +75,7 @@ struct ImportView: View {
                     if !showPreviewFull {
                         VStack(spacing: 8) {
                             if isSelecting {
-                                Button("Delete") {
+                                Button(String(localized: "Delete")) {
                                     let ids = selection
                                     Task {
                                         await vm.deleteAssets(ids: ids)
@@ -86,16 +94,28 @@ struct ImportView: View {
                                         }
                                         .buttonStyle(.bordered)
                                         Button(action: { vm.stopProcessing() }) {
-                                            Text("Stop")
+                                            Text(String(localized: "Stop"))
                                         }
                                         .buttonStyle(.bordered)
                                     }
                                 }
-                                Button(vm.state == .processing ? "Scanning..." : "Scan") {
-                                    Task { await vm.processAll() }
+                                HStack {
+                                    Button(vm.state == .processing ? String(localized: "Scanning...") : String(localized: "Scan")) {
+                                        Task { await vm.processAll() }
+                                    }
+                                    .disabled(vm.state == .processing)
+                                    .buttonStyle(.borderedProminent)
+                                    
+                                    Button {
+                                        checkCameraPermissionAndOpenCamera()
+                                    } label: {
+                                        Image(systemName: "camera")
+                                            .font(.title3)
+                                    }
+                                    .buttonStyle(.bordered)
+                                    .disabled(isCameraProcessing)
+                                    .accessibilityLabel(String(localized: "Camera"))
                                 }
-                                .disabled(vm.state == .processing)
-                                .buttonStyle(.borderedProminent)
                             }
                         }
                         .padding()
@@ -106,14 +126,28 @@ struct ImportView: View {
         .navigationTitle(albumTitle)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button(isSelecting ? "Done" : "Select") {
+                Button(isSelecting ? String(localized: "Done") : String(localized: "Select")) {
                     if isSelecting { selection.removeAll() }
                     isSelecting.toggle()
                 }
             }
             ToolbarItem(placement: .topBarTrailing) {
-                Button("Select Album") { showAlbumPicker = true }
+                Button(String(localized: "Select Album")) { showAlbumPicker = true }
             }
+        }
+        .onAppear {
+            // Check camera permission status on view appear
+            cameraPermissionStatus = AVCaptureDevice.authorizationStatus(for: .video)
+        }
+        .alert(String(localized: "Camera Permission Required"), isPresented: $showPermissionAlert) {
+            Button(String(localized: "Settings")) {
+                if let settingsUrl = URL(string: UIApplication.openSettingsURLString) {
+                    UIApplication.shared.open(settingsUrl)
+                }
+            }
+            Button(String(localized: "Cancel"), role: .cancel) { }
+        } message: {
+            Text(String(localized: "Please enable camera access in Settings to take photos for text recognition."))
         }
         .sheet(isPresented: $showAlbumPicker) {
             NavigationStack {
@@ -139,7 +173,7 @@ struct ImportView: View {
             } else {
                 NavigationStack {
                     VStack(spacing: 16) {
-                        Text("Image not available")
+                        Text(String(localized: "Image not available"))
                     }
                     .padding()
                 }
@@ -148,25 +182,181 @@ struct ImportView: View {
         }
         .fullScreenCover(isPresented: $showCamera) {
             CameraView { image in
-                cameraImage = image
+                // Store in ViewModel
+                vm.cameraImage = image
+                showCamera = false
                 isCameraProcessing = true
+                
                 Task {
                     let result = await vm.processCamera(image: image)
                     await MainActor.run {
-                        cameraResult = result
                         isCameraProcessing = false
-                        showCameraPreview = result != nil
+                        vm.cameraResult = result
+                        showCameraPreview = true
                     }
                 }
             }
         }
         .fullScreenCover(isPresented: $isCameraProcessing) {
-            VStack { ProgressView("Processing...") }
+            VStack(spacing: 20) {
+                ProgressView()
+                    .scaleEffect(1.5)
+                Text(String(localized: "Processing image..."))
+                    .font(.headline)
+                Text(String(localized: "Analyzing text and patterns..."))
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color.black.opacity(0.8))
+            .ignoresSafeArea()
         }
         .sheet(isPresented: $showCameraPreview) {
-            if let img = cameraImage, let result = cameraResult {
-                NavigationStack { CameraPreviewDetailView(image: img, result: result) }
+            NavigationStack {
+                // Directly use ViewModel storage
+                let displayImage = vm.cameraImage
+                let displayResult = vm.cameraResult
+                
+                if let img = displayImage, let result = displayResult {
+                    // Processing was successful, show results
+                    CameraPreviewDetailView(image: img, result: result)
+                } else if let img = displayImage {
+                    // Processing failed, show error with the captured image
+                    VStack(spacing: 16) {
+                        Image(uiImage: img)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxHeight: 200)
+                            .cornerRadius(8)
+                        
+                        Text(String(localized: "Processing Failed"))
+                            .font(.headline)
+                        Text(String(localized: "Unable to process the captured image"))
+                            .foregroundStyle(.secondary)
+                            .multilineTextAlignment(.center)
+                        
+                        Button(String(localized: "Try Again")) {
+                            showCameraPreview = false
+                            vm.cameraImage = nil
+                            vm.cameraResult = nil
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                checkCameraPermissionAndOpenCamera()
+                            }
+                        }
+                        .buttonStyle(.borderedProminent)
+                        
+                        Button(String(localized: "Close")) {
+                            showCameraPreview = false
+                            vm.cameraImage = nil
+                            vm.cameraResult = nil
+                        }
+                        .buttonStyle(.bordered)
+                    }
+                    .padding()
+                    .navigationTitle(String(localized: "Camera"))
+                    .navigationBarTitleDisplayMode(.inline)
+                } else if let result = displayResult {
+                    // Edge case: We have result but no image - show text only
+                    VStack(spacing: 16) {
+                        Text(String(localized: "Image Lost"))
+                            .font(.headline)
+                        Text(String(localized: "The camera image was lost, but we have the processing results"))
+                            .foregroundStyle(.secondary)
+                            .multilineTextAlignment(.center)
+                        
+                        VStack(alignment: .leading, spacing: 12) {
+                            if !result.ids.isEmpty {
+                                Text(String(localized: "Detected IDs:")).font(.headline)
+                                ForEach(result.ids, id: \.value) { id in
+                                    Text("• \(id.value)")
+                                        .textSelection(.enabled)
+                                }
+                            }
+                            
+                            if !result.ocrText.isEmpty {
+                                Text(String(localized: "OCR Text:")).font(.headline)
+                                SelectableTextView(text: result.ocrText)
+                                    .frame(minHeight: 100)
+                                    .padding(8)
+                                    .background(Color.gray.opacity(0.1))
+                                    .cornerRadius(8)
+                            }
+                        }
+                        .padding()
+                        
+                        Button(String(localized: "Close")) {
+                            showCameraPreview = false
+                            vm.cameraImage = nil
+                            vm.cameraResult = nil
+                        }
+                        .buttonStyle(.borderedProminent)
+                    }
+                    .padding()
+                    .navigationTitle(String(localized: "Camera Result"))
+                    .navigationBarTitleDisplayMode(.inline)
+                } else {
+                    // Last resort - should not happen in normal use
+                    VStack(spacing: 16) {
+                        Text(String(localized: "Camera Error"))
+                            .font(.headline)
+                        Text(String(localized: "Something went wrong with camera processing"))
+                            .foregroundStyle(.secondary)
+                        
+                        Button(String(localized: "Try Camera Again")) {
+                            showCameraPreview = false
+                            vm.cameraImage = nil
+                            vm.cameraResult = nil
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                checkCameraPermissionAndOpenCamera()
+                            }
+                        }
+                        .buttonStyle(.borderedProminent)
+                        
+                        Button(String(localized: "Close")) {
+                            showCameraPreview = false
+                            vm.cameraImage = nil
+                            vm.cameraResult = nil
+                        }
+                        .buttonStyle(.bordered)
+                    }
+                    .padding()
+                    .navigationTitle(String(localized: "Camera"))
+                    .navigationBarTitleDisplayMode(.inline)
+                }
             }
+        }
+    }
+    
+    private func checkCameraPermissionAndOpenCamera() {
+        // Always refresh the permission status before checking
+        cameraPermissionStatus = AVCaptureDevice.authorizationStatus(for: .video)
+        
+        switch cameraPermissionStatus {
+        case .authorized:
+            // Camera access is already granted, open the camera
+            showCamera = true
+        case .notDetermined:
+            // Camera access has not been requested yet, request access
+            AVCaptureDevice.requestAccess(for: .video) { granted in
+                DispatchQueue.main.async {
+                    // Update the permission status after the request
+                    self.cameraPermissionStatus = AVCaptureDevice.authorizationStatus(for: .video)
+                    
+                    if granted {
+                        // Access granted, open the camera
+                        self.showCamera = true
+                    } else {
+                        // Access denied, show alert
+                        self.showPermissionAlert = true
+                    }
+                }
+            }
+        case .denied, .restricted:
+            // Camera access is denied or restricted, show alert
+            showPermissionAlert = true
+        @unknown default:
+            // Handle any future cases
+            showPermissionAlert = true
         }
     }
 }
@@ -202,7 +392,7 @@ struct PreviewDetailView: View {
                 if let p = vm.processedItem(for: asset) {
                     Divider()
                     HStack {
-                        Text("Detected IDs").font(.headline)
+                        Text(String(localized: "Detected IDs")).font(.headline)
                         Spacer()
                         Button(action: {
                             isRedetecting = true
@@ -215,7 +405,7 @@ struct PreviewDetailView: View {
                                 if isRedetecting {
                                     ProgressView().controlSize(.small)
                                 } else {
-                                    Text("Re-scan this image")
+                                    Text(String(localized: "Re-scan this image"))
                                 }
                             }
                             .padding(.vertical, 6)
@@ -236,10 +426,10 @@ struct PreviewDetailView: View {
                                         if let url = searchURL(for: c.value) { openURL(url) }
                                     }
                                     .contextMenu {
-                                        Button("Copy ID") {
+                                        Button(String(localized: "Copy ID")) {
                                             UIPasteboard.general.string = c.value
                                         }
-                                        Button("Search on the web") {
+                                        Button(String(localized: "Search on the web")) {
                                             if let url = searchURL(for: c.value) { openURL(url) }
                                         }
                                     }
@@ -249,10 +439,10 @@ struct PreviewDetailView: View {
                     }
                     Divider()
                     HStack {
-                        Text("OCR Text").font(.headline)
+                        Text(String(localized: "OCR Text")).font(.headline)
                         Spacer()
                         Button(action: { UIPasteboard.general.string = p.ocrText }) {
-                            Text("Copy OCR")
+                            Text(String(localized: "Copy OCR"))
                                 .padding(.vertical, 6)
                                 .contentShape(Rectangle())
                         }
@@ -264,7 +454,7 @@ struct PreviewDetailView: View {
             }
             .padding()
         }
-        .navigationTitle("Preview")
+        .navigationTitle(String(localized: "Preview"))
         .task(id: localId) {
             if let cg = try? await photo.requestCGImage(for: asset) {
                 if asset.localIdentifier == localId {
@@ -283,59 +473,97 @@ struct PreviewDetailView: View {
 struct CameraPreviewDetailView: View {
     let image: UIImage
     let result: ProcessedAsset
+    @Environment(\.dismiss) private var dismiss
     @Environment(\.openURL) private var openURL
-
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 12) {
+                // Always show the captured image
                 Image(uiImage: image)
                     .resizable()
                     .scaledToFit()
-
-                Divider()
-                HStack {
-                    Text("Detected IDs").font(.headline)
-                    Spacer()
-                }
-                if result.ids.isEmpty {
-                    Text("—").foregroundStyle(.secondary)
-                } else {
-                    ForEach(result.ids, id: \.value) { c in
+                    .frame(maxHeight: 300)
+                    .clipped()
+                    .background(Color.gray.opacity(0.1))
+                
+                // Show processing results
+                VStack(alignment: .leading, spacing: 16) {
+                    // Detected IDs Section
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(String(localized: "Detected IDs")).font(.headline)
+                        if !result.ids.isEmpty {
+                            ForEach(result.ids, id: \.value) { id in
+                                HStack {
+                                    Text(id.value)
+                                        .bold()
+                                        .underline()
+                                        .textSelection(.enabled)
+                                        .onTapGesture {
+                                            if let url = searchURL(for: id.value) { openURL(url) }
+                                        }
+                                        .contextMenu {
+                                            Button(String(localized: "Copy ID")) {
+                                                UIPasteboard.general.string = id.value
+                                            }
+                                            Button(String(localized: "Search on the web")) {
+                                                if let url = searchURL(for: id.value) { openURL(url) }
+                                            }
+                                        }
+                                    Spacer()
+                                }
+                                .padding(.vertical, 4)
+                                .padding(.horizontal, 8)
+                                .background(Color.blue.opacity(0.1))
+                                .cornerRadius(8)
+                            }
+                        } else {
+                            Text(String(localized: "No IDs detected"))
+                                .foregroundStyle(.secondary)
+                                .italic()
+                        }
+                    }
+                    
+                    Divider()
+                    
+                    // OCR Text Section
+                    VStack(alignment: .leading, spacing: 8) {
                         HStack {
-                            Text(c.value)
-                                .bold()
-                                .underline()
-                                .textSelection(.enabled)
-                                .onTapGesture {
-                                    if let url = searchURL(for: c.value) { openURL(url) }
-                                }
-                                .contextMenu {
-                                    Button("Copy ID") { UIPasteboard.general.string = c.value }
-                                    Button("Search on the web") { if let url = searchURL(for: c.value) { openURL(url) } }
-                                }
+                            Text(String(localized: "OCR Text")).font(.headline)
                             Spacer()
+                            if !result.ocrText.isEmpty {
+                                Button(String(localized: "Copy OCR")) {
+                                    UIPasteboard.general.string = result.ocrText
+                                }
+                                .buttonStyle(.bordered)
+                            }
+                        }
+                        
+                        if !result.ocrText.isEmpty {
+                            SelectableTextView(text: result.ocrText)
+                                .frame(maxWidth: .infinity, minHeight: 120, alignment: .leading)
+                                .padding(8)
+                                .background(Color.gray.opacity(0.1))
+                                .cornerRadius(8)
+                        } else {
+                            Text(String(localized: "No text detected"))
+                                .foregroundStyle(.secondary)
+                                .italic()
                         }
                     }
                 }
-                Divider()
-                HStack {
-                    Text("OCR Text").font(.headline)
-                    Spacer()
-                    Button(action: { UIPasteboard.general.string = result.ocrText }) {
-                        Text("Copy OCR")
-                            .padding(.vertical, 6)
-                            .contentShape(Rectangle())
-                    }
-                    .buttonStyle(.bordered)
-                }
-                SelectableTextView(text: result.ocrText)
-                    .frame(maxWidth: .infinity, minHeight: 120, alignment: .leading)
             }
             .padding()
         }
-        .navigationTitle("Preview")
+        .navigationTitle(String(localized: "Camera Result"))
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(String(localized: "Done")) { dismiss() }
+            }
+        }
     }
-
+    
     private func searchURL(for id: String) -> URL? {
         let q = id.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? id
         return URL(string: "https://www.google.com/search?q=\(q)")
@@ -343,31 +571,38 @@ struct CameraPreviewDetailView: View {
 }
 
 struct CameraView: UIViewControllerRepresentable {
-    var onImage: (UIImage) -> Void
-    @Environment(\.dismiss) private var dismiss
-
+    let onImageCaptured: (UIImage) -> Void
+    
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let picker = UIImagePickerController()
-        picker.sourceType = .camera
         picker.delegate = context.coordinator
+        picker.sourceType = .camera
+        picker.allowsEditing = false
         return picker
     }
-
+    
     func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
-
-    func makeCoordinator() -> Coordinator { Coordinator(parent: self) }
-
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+    
     final class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
         let parent: CameraView
-        init(parent: CameraView) { self.parent = parent }
-        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-            if let img = info[.originalImage] as? UIImage {
-                parent.onImage(img)
-            }
-            parent.dismiss()
+        
+        init(_ parent: CameraView) {
+            self.parent = parent
         }
+        
+        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            if let image = info[.originalImage] as? UIImage {
+                parent.onImageCaptured(image)
+            }
+            picker.dismiss(animated: true)
+        }
+        
         func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-            parent.dismiss()
+            picker.dismiss(animated: true)
         }
     }
 }

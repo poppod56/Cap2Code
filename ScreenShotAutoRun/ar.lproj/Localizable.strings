@@ -32,3 +32,26 @@
 "Invoice" = "فاتورة";
 "Select Album" = "حدد الألبوم";
 "Loading Photos..." = "تحميل الصور ...";
+
+// Camera functionality strings
+"Camera" = "كاميرا";
+"Camera Permission Required" = "مطلوب إذن الكاميرا";
+"Settings" = "الإعدادات";
+"Cancel" = "إلغاء";
+"Please enable camera access in Settings to take photos for text recognition." = "يرجى تمكين الوصول إلى الكاميرا في الإعدادات لالتقاط الصور للتعرف على النص.";
+"Processing image..." = "معالجة الصورة...";
+"Analyzing text and patterns..." = "تحليل النص والأنماط...";
+"Processing Failed" = "فشلت المعالجة";
+"Unable to process the captured image" = "غير قادر على معالجة الصورة الملتقطة";
+"Try Again" = "حاول مرة أخرى";
+"Close" = "أغلق";
+"Image Lost" = "الصورة مفقودة";
+"The camera image was lost, but we have the processing results" = "فُقدت صورة الكاميرا، لكن لدينا نتائج المعالجة";
+"Detected IDs:" = "المعرفات المكتشفة:";
+"OCR Text:" = "نص OCR:";
+"Camera Result" = "نتيجة الكاميرا";
+"Camera Error" = "خطأ في الكاميرا";
+"Something went wrong with camera processing" = "حدث خطأ في معالجة الكاميرا";
+"Try Camera Again" = "جرب الكاميرا مرة أخرى";
+"No IDs detected" = "لم يتم اكتشاف معرفات";
+"No text detected" = "لم يتم اكتشاف نص";

@@ -32,3 +32,26 @@
 "Invoice" = "Invoice";
 "Select Album" = "Select Album";
 "Loading Photos..." = "Loading Photos...";
+
+// Camera functionality strings
+"Camera" = "Camera";
+"Camera Permission Required" = "Camera Permission Required";
+"Settings" = "Settings";
+"Cancel" = "Cancel";
+"Please enable camera access in Settings to take photos for text recognition." = "Please enable camera access in Settings to take photos for text recognition.";
+"Processing image..." = "Processing image...";
+"Analyzing text and patterns..." = "Analyzing text and patterns...";
+"Processing Failed" = "Processing Failed";
+"Unable to process the captured image" = "Unable to process the captured image";
+"Try Again" = "Try Again";
+"Close" = "Close";
+"Image Lost" = "Image Lost";
+"The camera image was lost, but we have the processing results" = "The camera image was lost, but we have the processing results";
+"Detected IDs:" = "Detected IDs:";
+"OCR Text:" = "OCR Text:";
+"Camera Result" = "Camera Result";
+"Camera Error" = "Camera Error";
+"Something went wrong with camera processing" = "Something went wrong with camera processing";
+"Try Camera Again" = "Try Camera Again";
+"No IDs detected" = "No IDs detected";
+"No text detected" = "No text detected";

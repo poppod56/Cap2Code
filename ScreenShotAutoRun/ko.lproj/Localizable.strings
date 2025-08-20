@@ -32,3 +32,26 @@
 "Invoice" = "인보이스";
 "Select Album" = "앨범 선택";
 "Loading Photos..." = "사진 불러오는 중...";
+
+// Camera functionality strings
+"Camera" = "카메라";
+"Camera Permission Required" = "카메라 권한 필요";
+"Settings" = "설정";
+"Cancel" = "취소";
+"Please enable camera access in Settings to take photos for text recognition." = "텍스트 인식을 위한 사진 촬영을 위해 설정에서 카메라 액세스를 활성화하십시오.";
+"Processing image..." = "이미지 처리 중...";
+"Analyzing text and patterns..." = "텍스트 및 패턴 분석 중...";
+"Processing Failed" = "처리 실패";
+"Unable to process the captured image" = "캡처한 이미지를 처리할 수 없습니다";
+"Try Again" = "다시 시도";
+"Close" = "닫기";
+"Image Lost" = "이미지 손실";
+"The camera image was lost, but we have the processing results" = "카메라 이미지는 손실되었지만 처리 결과가 있습니다";
+"Detected IDs:" = "감지된 ID:";
+"OCR Text:" = "OCR 텍스트:";
+"Camera Result" = "카메라 결과";
+"Camera Error" = "카메라 오류";
+"Something went wrong with camera processing" = "카메라 처리 중 문제가 발생했습니다";
+"Try Camera Again" = "카메라 다시 시도";
+"No IDs detected" = "ID가 감지되지 않음";
+"No text detected" = "텍스트가 감지되지 않음";
