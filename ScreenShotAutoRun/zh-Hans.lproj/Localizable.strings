@@ -55,3 +55,6 @@
 "Try Camera Again" = "再次尝试相机";
 "No IDs detected" = "未检测到ID";
 "No text detected" = "未检测到文本";
+
+// Selection functionality strings
+"Scan Selected" = "扫描选中项";

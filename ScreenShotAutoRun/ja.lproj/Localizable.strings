@@ -55,3 +55,6 @@
 "Try Camera Again" = "カメラを再試行";
 "No IDs detected" = "IDが検出されませんでした";
 "No text detected" = "テキストが検出されませんでした";
+
+// Selection functionality strings
+"Scan Selected" = "選択項目をスキャン";

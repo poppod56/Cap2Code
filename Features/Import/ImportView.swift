@@ -75,16 +75,29 @@ struct ImportView: View {
                     if !showPreviewFull {
                         VStack(spacing: 8) {
                             if isSelecting {
-                                Button(String(localized: "Delete")) {
-                                    let ids = selection
-                                    Task {
-                                        await vm.deleteAssets(ids: ids)
+                                HStack(spacing: 12) {
+                                    Button(String(localized: "Scan Selected")) {
+                                        let selectedIds = Array(selection)
+                                        Task {
+                                            await vm.processSelected(localIds: selectedIds)
+                                        }
+                                        selection.removeAll()
+                                        isSelecting = false
                                     }
-                                    selection.removeAll()
-                                    isSelecting = false
+                                    .disabled(selection.isEmpty)
+                                    .buttonStyle(.borderedProminent)
+                                    
+                                    Button(String(localized: "Delete")) {
+                                        let ids = selection
+                                        Task {
+                                            await vm.deleteAssets(ids: ids)
+                                        }
+                                        selection.removeAll()
+                                        isSelecting = false
+                                    }
+                                    .disabled(selection.isEmpty)
+                                    .buttonStyle(.bordered)
                                 }
-                                .disabled(selection.isEmpty)
-                                .buttonStyle(.borderedProminent)
                             } else {
                                 if vm.state == .processing {
                                     ProgressView(value: vm.progress).padding(.horizontal)

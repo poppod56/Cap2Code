@@ -55,3 +55,6 @@
 "Try Camera Again" = "Try Camera Again";
 "No IDs detected" = "No IDs detected";
 "No text detected" = "No text detected";
+
+// Selection functionality strings
+"Scan Selected" = "Scan Selected";

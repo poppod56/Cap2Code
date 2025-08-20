@@ -55,3 +55,6 @@
 "Try Camera Again" = "Попробовать камеру снова";
 "No IDs detected" = "ID не обнаружены";
 "No text detected" = "Текст не обнаружен";
+
+// Selection functionality strings
+"Scan Selected" = "Сканировать выбранные";

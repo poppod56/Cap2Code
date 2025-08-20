@@ -55,3 +55,6 @@
 "Try Camera Again" = "ลองใช้กล้องอีกครั้ง";
 "No IDs detected" = "ไม่พบ ID";
 "No text detected" = "ไม่พบข้อความ";
+
+// Selection functionality strings
+"Scan Selected" = "สแกนรายการที่เลือก";

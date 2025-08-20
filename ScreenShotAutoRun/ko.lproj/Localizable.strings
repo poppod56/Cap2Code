@@ -55,3 +55,6 @@
 "Try Camera Again" = "카메라 다시 시도";
 "No IDs detected" = "ID가 감지되지 않음";
 "No text detected" = "텍스트가 감지되지 않음";
+
+// Selection functionality strings
+"Scan Selected" = "선택 항목 스캔";

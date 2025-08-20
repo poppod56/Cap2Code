@@ -55,3 +55,6 @@
 "Try Camera Again" = "جرب الكاميرا مرة أخرى";
 "No IDs detected" = "لم يتم اكتشاف معرفات";
 "No text detected" = "لم يتم اكتشاف نص";
+
+// Selection functionality strings
+"Scan Selected" = "مسح المحدد";

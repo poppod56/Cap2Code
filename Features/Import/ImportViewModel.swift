@@ -214,6 +214,60 @@ final class ImportViewModel: ObservableObject {
     }
 
     @MainActor
+    func processSelected(localIds: [String]) async {
+        guard processingTask == nil else { return }
+
+        isPaused = false
+        isCancelled = false
+        state = .processing
+        progress = 0
+
+        // Filter assets to only those with the selected localIds
+        let toProcess = assets.filter { localIds.contains($0.localIdentifier) }
+        let total = Double(max(toProcess.count, 1))
+
+        processingTask = Task { [weak self, toProcess, total] in
+            guard let self = self else { return }
+            var done = 0.0
+            for a in toProcess {
+                if Task.isCancelled || self.isCancelled { break }
+
+                while self.isPaused {
+                    try? await Task.sleep(nanoseconds: 100_000_000)
+                    if Task.isCancelled || self.isCancelled { break }
+                }
+                if Task.isCancelled || self.isCancelled { break }
+
+                if self.store.get(a.localIdentifier) != nil {
+                    done += 1
+                    await MainActor.run { self.progress = done / total }
+                    continue
+                }
+
+                do {
+                    let cg = try await self.photo.requestCGImage(for: a)
+                    let res = try await self.ocr.recognizeText(cgImage: cg)
+                    let ids = self.detector.find(in: res.fullText, patterns: self.patterns.enabledPatterns)
+                        .map { DetectedIDDTO(value: $0.value) }
+                    let item = ProcessedAsset(localId: a.localIdentifier, createdAt: a.creationDate ?? Date(), ocrText: res.fullText, ids: ids, category: self.currentAlbumTitle)
+                    self.store.upsert(item)
+                } catch {
+                }
+
+                done += 1
+                await MainActor.run { self.progress = done / total }
+            }
+
+            await MainActor.run {
+                self.processingTask = nil
+                self.state = .loaded
+            }
+        }
+
+        _ = processingTask
+    }
+
+    @MainActor
     func pauseProcessing() {
         guard processingTask != nil else { return }
         isPaused = true

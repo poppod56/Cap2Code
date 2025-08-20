@@ -55,3 +55,6 @@
 "Try Camera Again" = "Intentar cámara de nuevo";
 "No IDs detected" = "No se detectaron IDs";
 "No text detected" = "No se detectó texto";
+
+// Selection functionality strings
+"Scan Selected" = "Escanear seleccionados";
