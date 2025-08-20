@@ -1,6 +1,7 @@
 import Foundation
 import Photos
 import SwiftUI
+import UIKit
 
 final class ImportViewModel: ObservableObject {
     enum State: Equatable {
@@ -26,6 +27,7 @@ final class ImportViewModel: ObservableObject {
     let detector: IDDetector = IDDetectorImpl()
     let store = JSONStore.shared
     let patterns = PatternStore.shared
+    @Published var currentAlbumTitle: String = String(localized: "Screenshots")
 
     func fetchAlbums() async -> [PHAssetCollection] {
         await photo.fetchAlbums()
@@ -40,6 +42,7 @@ final class ImportViewModel: ObservableObject {
                 await MainActor.run {
                     self.assets = list
                     self.state = .loaded
+                    self.currentAlbumTitle = collection.localizedTitle ?? String(localized: "Screenshots")
                 }
             } catch {
                 await MainActor.run { self.state = .error(error.localizedDescription) }
@@ -107,7 +110,8 @@ final class ImportViewModel: ObservableObject {
                 localId: p.localId,
                 createdAt: p.createdAt,
                 ocrText: p.ocrText,
-                ids: ids
+                ids: ids,
+                category: p.category
             )
             store.upsert(updated)
             done += 1
@@ -124,12 +128,28 @@ final class ImportViewModel: ObservableObject {
             localId: p.localId,
             createdAt: p.createdAt,
             ocrText: p.ocrText,
-            ids: ids
+            ids: ids,
+            category: p.category
         )
         store.upsert(updated)
     }
     func asset(with localId: String) -> PHAsset? {
         assets.first(where: { $0.localIdentifier == localId })
+    }
+
+    func processCamera(image: UIImage) async -> ProcessedAsset? {
+        guard let cg = image.cgImage else { return nil }
+        do {
+            let res = try await ocr.recognizeText(cgImage: cg)
+            let ids = detector.find(in: res.fullText, patterns: patterns.enabledPatterns)
+                .map { DetectedIDDTO(value: $0.value) }
+            let localId = UUID().uuidString
+            let item = ProcessedAsset(localId: localId, createdAt: Date(), ocrText: res.fullText, ids: ids, category: "Camera")
+            store.upsert(item)
+            return item
+        } catch {
+            return nil
+        }
     }
 
     @MainActor
@@ -167,7 +187,7 @@ final class ImportViewModel: ObservableObject {
                     let res = try await self.ocr.recognizeText(cgImage: cg)
                     let ids = self.detector.find(in: res.fullText, patterns: self.patterns.enabledPatterns)
                         .map { DetectedIDDTO(value: $0.value) }
-                    let item = ProcessedAsset(localId: a.localIdentifier, createdAt: a.creationDate ?? Date(), ocrText: res.fullText, ids: ids)
+                    let item = ProcessedAsset(localId: a.localIdentifier, createdAt: a.creationDate ?? Date(), ocrText: res.fullText, ids: ids, category: self.currentAlbumTitle)
                     self.store.upsert(item)
                 } catch {
                 }

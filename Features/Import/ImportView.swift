@@ -11,13 +11,22 @@ struct ImportView: View {
     @State private var showAlbumPicker = false
     @State private var albums: [PHAssetCollection] = []
     @State private var albumTitle: String = String(localized: "Screenshots")
+    @State private var showCamera = false
+    @State private var isCameraProcessing = false
+    @State private var cameraImage: UIImage?
+    @State private var cameraResult: ProcessedAsset?
+    @State private var showCameraPreview = false
 
     var body: some View {
         VStack {
             switch vm.state {
             case .idle:
-                Button("Select Album") { showAlbumPicker = true }
-                    .buttonStyle(.borderedProminent)
+                VStack(spacing: 16) {
+                    Button("Select Album") { showAlbumPicker = true }
+                        .buttonStyle(.borderedProminent)
+                    Button("Camera") { showCamera = true }
+                        .buttonStyle(.bordered)
+                }
 
             case .loading:
                 ProgressView("Loading Photos...")
@@ -137,6 +146,28 @@ struct ImportView: View {
                 .interactiveDismissDisabled(false)
             }
         }
+        .fullScreenCover(isPresented: $showCamera) {
+            CameraView { image in
+                cameraImage = image
+                isCameraProcessing = true
+                Task {
+                    let result = await vm.processCamera(image: image)
+                    await MainActor.run {
+                        cameraResult = result
+                        isCameraProcessing = false
+                        showCameraPreview = result != nil
+                    }
+                }
+            }
+        }
+        .fullScreenCover(isPresented: $isCameraProcessing) {
+            VStack { ProgressView("Processing...") }
+        }
+        .sheet(isPresented: $showCameraPreview) {
+            if let img = cameraImage, let result = cameraResult {
+                NavigationStack { CameraPreviewDetailView(image: img, result: result) }
+            }
+        }
     }
 }
 
@@ -246,5 +277,97 @@ struct PreviewDetailView: View {
     private func searchURL(for id: String) -> URL? {
         let q = id.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? id
         return URL(string: "https://www.google.com/search?q=\(q)")
+    }
+}
+
+struct CameraPreviewDetailView: View {
+    let image: UIImage
+    let result: ProcessedAsset
+    @Environment(\.openURL) private var openURL
+
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 12) {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFit()
+
+                Divider()
+                HStack {
+                    Text("Detected IDs").font(.headline)
+                    Spacer()
+                }
+                if result.ids.isEmpty {
+                    Text("—").foregroundStyle(.secondary)
+                } else {
+                    ForEach(result.ids, id: \.value) { c in
+                        HStack {
+                            Text(c.value)
+                                .bold()
+                                .underline()
+                                .textSelection(.enabled)
+                                .onTapGesture {
+                                    if let url = searchURL(for: c.value) { openURL(url) }
+                                }
+                                .contextMenu {
+                                    Button("Copy ID") { UIPasteboard.general.string = c.value }
+                                    Button("Search on the web") { if let url = searchURL(for: c.value) { openURL(url) } }
+                                }
+                            Spacer()
+                        }
+                    }
+                }
+                Divider()
+                HStack {
+                    Text("OCR Text").font(.headline)
+                    Spacer()
+                    Button(action: { UIPasteboard.general.string = result.ocrText }) {
+                        Text("Copy OCR")
+                            .padding(.vertical, 6)
+                            .contentShape(Rectangle())
+                    }
+                    .buttonStyle(.bordered)
+                }
+                SelectableTextView(text: result.ocrText)
+                    .frame(maxWidth: .infinity, minHeight: 120, alignment: .leading)
+            }
+            .padding()
+        }
+        .navigationTitle("Preview")
+    }
+
+    private func searchURL(for id: String) -> URL? {
+        let q = id.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? id
+        return URL(string: "https://www.google.com/search?q=\(q)")
+    }
+}
+
+struct CameraView: UIViewControllerRepresentable {
+    var onImage: (UIImage) -> Void
+    @Environment(\.dismiss) private var dismiss
+
+    func makeUIViewController(context: Context) -> UIImagePickerController {
+        let picker = UIImagePickerController()
+        picker.sourceType = .camera
+        picker.delegate = context.coordinator
+        return picker
+    }
+
+    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
+
+    func makeCoordinator() -> Coordinator { Coordinator(parent: self) }
+
+    final class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+        let parent: CameraView
+        init(parent: CameraView) { self.parent = parent }
+        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            if let img = info[.originalImage] as? UIImage {
+                parent.onImage(img)
+            }
+            parent.dismiss()
+        }
+        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+            parent.dismiss()
+        }
     }
 }

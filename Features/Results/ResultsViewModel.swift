@@ -9,21 +9,29 @@ struct ResultCard: Identifiable {
 
 final class ResultsViewModel: ObservableObject {
     @Published var cards: [ResultCard] = []
+    @Published var categories: [String] = ["All"]
+    @Published var selectedCategory: String = "All"
+    private var allItems: [ProcessedAsset] = []
     let store = JSONStore.shared
 
     func load() {
-        let items = store.all()
-        cards = items.map { ResultCard(assetId: $0.localId, date: $0.createdAt, ids: $0.ids) }
+        allItems = store.all()
+        categories = ["All"] + Array(Set(allItems.map { $0.category })).sorted()
+        applyFilter()
+    }
+
+    func applyFilter() {
+        let filtered = selectedCategory == "All" ? allItems : allItems.filter { $0.category == selectedCategory }
+        cards = filtered.map { ResultCard(assetId: $0.localId, date: $0.createdAt, ids: $0.ids) }
             .sorted { $0.date > $1.date }
     }
 
     func exportCSV() -> URL? {
-        let items = store.all()
-        var csv = "assetId,id,date\n"
+        var csv = "assetId,id,date,category\n"
         let formatter = ISO8601DateFormatter()
-        for p in items {
+        for p in allItems {
             for c in p.ids {
-                csv += "\(p.localId),\(c.value),\(formatter.string(from: p.createdAt))\n"
+                csv += "\(p.localId),\(c.value),\(formatter.string(from: p.createdAt)),\(p.category)\n"
             }
         }
         let url = FileManager.default.temporaryDirectory.appendingPathComponent("results.csv")
@@ -38,11 +46,17 @@ final class ResultsViewModel: ObservableObject {
     func delete(at offsets: IndexSet) {
         let ids = offsets.map { cards[$0].assetId }
         store.delete(ids)
-        cards.remove(atOffsets: offsets)
+        allItems.removeAll { ids.contains($0.localId) }
+        categories = ["All"] + Array(Set(allItems.map { $0.category })).sorted()
+        if !categories.contains(selectedCategory) { selectedCategory = "All" }
+        applyFilter()
     }
 
     func clearAll() {
         store.deleteAll()
+        allItems.removeAll()
         cards.removeAll()
+        categories = ["All"]
+        selectedCategory = "All"
     }
 }
