@@ -9,42 +9,49 @@ struct ResultsView: View {
     @State private var showClearConfirm = false
 
     var body: some View {
-        List {
-            ForEach(vm.cards) { r in
-                VStack(alignment: .leading, spacing: 6) {
-                    ForEach(r.ids, id: \.value) { c in
-                        HStack {
-                            Button(action: {
-                                if let url = searchURL(for: c.value) { openURL(url) }
-                            }) {
-                                Text(c.value)
-                                    .font(.headline)
-                                    .underline(true)
-                            }
-                            .contextMenu {
-                                Button("Copy ID") {
-                                    UIPasteboard.general.string = c.value
-                                }
-                                Button("Search on the web") {
+        VStack {
+            Picker("Category", selection: $vm.selectedCategory) {
+                ForEach(vm.categories, id: \.self) { Text($0).tag($0) }
+            }
+            .pickerStyle(.segmented)
+            .padding([.horizontal, .top])
+            List {
+                ForEach(vm.cards) { r in
+                    VStack(alignment: .leading, spacing: 6) {
+                        ForEach(r.ids, id: \.value) { c in
+                            HStack {
+                                Button(action: {
                                     if let url = searchURL(for: c.value) { openURL(url) }
+                                }) {
+                                    Text(c.value)
+                                        .font(.headline)
+                                        .underline(true)
                                 }
-                                Button("Copy OCR") {
-                                    if let ocr = JSONStore.shared.get(r.assetId)?.ocrText {
-                                        UIPasteboard.general.string = ocr
+                                .contextMenu {
+                                    Button("Copy ID") {
+                                        UIPasteboard.general.string = c.value
+                                    }
+                                    Button("Search on the web") {
+                                        if let url = searchURL(for: c.value) { openURL(url) }
+                                    }
+                                    Button("Copy OCR") {
+                                        if let ocr = JSONStore.shared.get(r.assetId)?.ocrText {
+                                            UIPasteboard.general.string = ocr
+                                        }
                                     }
                                 }
+                                Spacer()
                             }
+                        }
+                        HStack {
+                            Text(r.assetId).font(.caption2).foregroundStyle(.secondary)
                             Spacer()
+                            Text(r.date.formatted(date: .abbreviated, time: .shortened)).font(.caption)
                         }
                     }
-                    HStack {
-                        Text(r.assetId).font(.caption2).foregroundStyle(.secondary)
-                        Spacer()
-                        Text(r.date.formatted(date: .abbreviated, time: .shortened)).font(.caption)
-                    }
                 }
+                .onDelete(perform: vm.delete)
             }
-            .onDelete(perform: vm.delete)
         }
         .navigationTitle("Detected IDs")
         .toolbar {
@@ -70,6 +77,7 @@ struct ResultsView: View {
             Button("Delete All", role: .destructive) { vm.clearAll() }
         }
         .onAppear { vm.load() }
+        .onChange(of: vm.selectedCategory) { _ in vm.applyFilter() }
     }
 
     private func searchURL(for id: String) -> URL? {

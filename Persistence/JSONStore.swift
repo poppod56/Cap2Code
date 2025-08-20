@@ -6,6 +6,28 @@ struct ProcessedAsset: Codable, Identifiable {
     let createdAt: Date
     let ocrText: String
     let ids: [DetectedIDDTO]
+    let category: String
+
+    init(localId: String, createdAt: Date, ocrText: String, ids: [DetectedIDDTO], category: String = "Unknown") {
+        self.localId = localId
+        self.createdAt = createdAt
+        self.ocrText = ocrText
+        self.ids = ids
+        self.category = category
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case localId, createdAt, ocrText, ids, category
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.localId = try container.decode(String.self, forKey: .localId)
+        self.createdAt = try container.decode(Date.self, forKey: .createdAt)
+        self.ocrText = try container.decode(String.self, forKey: .ocrText)
+        self.ids = try container.decode([DetectedIDDTO].self, forKey: .ids)
+        self.category = try container.decodeIfPresent(String.self, forKey: .category) ?? "Unknown"
+    }
 }
 
 struct DetectedIDDTO: Codable, Hashable {
