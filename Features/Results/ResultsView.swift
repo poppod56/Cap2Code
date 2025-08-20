@@ -20,27 +20,32 @@ struct ResultsView: View {
                     VStack(alignment: .leading, spacing: 6) {
                         ForEach(r.ids, id: \.value) { c in
                             HStack {
+                                Text(c.value)
+                                    .font(.headline)
+                                    .underline(true)
+                                    .contextMenu {
+                                        Button("Copy ID") {
+                                            UIPasteboard.general.string = c.value
+                                        }
+                                        Button("Search on the web") {
+                                            if let url = searchURL(for: c.value) { openURL(url) }
+                                        }
+                                        Button("Copy OCR") {
+                                            if let ocr = JSONStore.shared.get(r.assetId)?.ocrText {
+                                                UIPasteboard.general.string = ocr
+                                            }
+                                        }
+                                    }
+                                
+                                Spacer()
+                                
                                 Button(action: {
                                     if let url = searchURL(for: c.value) { openURL(url) }
                                 }) {
-                                    Text(c.value)
-                                        .font(.headline)
-                                        .underline(true)
+                                    Image(systemName: "magnifyingglass")
+                                        .foregroundColor(.blue)
                                 }
-                                .contextMenu {
-                                    Button("Copy ID") {
-                                        UIPasteboard.general.string = c.value
-                                    }
-                                    Button("Search on the web") {
-                                        if let url = searchURL(for: c.value) { openURL(url) }
-                                    }
-                                    Button("Copy OCR") {
-                                        if let ocr = JSONStore.shared.get(r.assetId)?.ocrText {
-                                            UIPasteboard.general.string = ocr
-                                        }
-                                    }
-                                }
-                                Spacer()
+                                .buttonStyle(.plain)
                             }
                         }
                         HStack {
