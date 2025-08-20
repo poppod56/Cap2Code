@@ -64,3 +64,11 @@
 "Update" = "更新";
 "Later" = "稍后";
 "A new version (%@) is available. You are currently using version (%@)." = "新版本 (%@) 可用。您当前使用的是版本 (%@)。";
+
+// Settings strings
+"Patterns" = "模式";
+"Name" = "名称";
+"Pattern" = "模式";
+"Add Pattern" = "添加模式";
+"Edit Pattern" = "编辑模式";
+"Save" = "保存";

@@ -64,3 +64,11 @@
 "Update" = "تحديث";
 "Later" = "لاحقاً";
 "A new version (%@) is available. You are currently using version (%@)." = "إصدار جديد (%@) متاح. أنت تستخدم حالياً الإصدار (%@).";
+
+// Settings strings
+"Patterns" = "أنماط";
+"Name" = "اسم";
+"Pattern" = "نمط";
+"Add Pattern" = "إضافة نمط";
+"Edit Pattern" = "تحرير النمط";
+"Save" = "حفظ";

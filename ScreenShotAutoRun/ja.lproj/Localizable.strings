@@ -64,3 +64,11 @@
 "Update" = "アップデート";
 "Later" = "後で";
 "A new version (%@) is available. You are currently using version (%@)." = "新しいバージョン (%@) が利用可能です。現在のバージョンは (%@) です。";
+
+// Settings strings
+"Patterns" = "パターン";
+"Name" = "名前";
+"Pattern" = "パターン";
+"Add Pattern" = "パターンを追加";
+"Edit Pattern" = "パターンを編集";
+"Save" = "保存";

@@ -64,3 +64,11 @@
 "Update" = "Aktualisieren";
 "Later" = "Später";
 "A new version (%@) is available. You are currently using version (%@)." = "Eine neue Version (%@) ist verfügbar. Sie verwenden derzeit Version (%@).";
+
+// Settings strings
+"Patterns" = "Muster";
+"Name" = "Name";
+"Pattern" = "Muster";
+"Add Pattern" = "Muster hinzufügen";
+"Edit Pattern" = "Muster bearbeiten";
+"Save" = "Speichern";

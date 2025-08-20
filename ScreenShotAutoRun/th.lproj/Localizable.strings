@@ -64,3 +64,11 @@
 "Update" = "อัปเดต";
 "Later" = "ภายหลัง";
 "A new version (%@) is available. You are currently using version (%@)." = "เวอร์ชันใหม่ (%@) พร้อมใช้งาน คุณกำลังใช้เวอร์ชัน (%@) อยู่";
+
+// Settings strings
+"Patterns" = "รูปแบบ";
+"Name" = "ชื่อ";
+"Pattern" = "รูปแบบ";
+"Add Pattern" = "เพิ่มรูปแบบ";
+"Edit Pattern" = "แก้ไขรูปแบบ";
+"Save" = "บันทึก";

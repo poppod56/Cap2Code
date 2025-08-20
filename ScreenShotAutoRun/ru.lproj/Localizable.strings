@@ -64,3 +64,11 @@
 "Update" = "Обновить";
 "Later" = "Позже";
 "A new version (%@) is available. You are currently using version (%@)." = "Доступна новая версия (%@). Вы используете версию (%@).";
+
+// Settings strings
+"Patterns" = "Шаблоны";
+"Name" = "Имя";
+"Pattern" = "Шаблон";
+"Add Pattern" = "Добавить шаблон";
+"Edit Pattern" = "Редактировать шаблон";
+"Save" = "Сохранить";
