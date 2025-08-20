@@ -72,3 +72,11 @@
 "Add Pattern" = "Muster hinzufügen";
 "Edit Pattern" = "Muster bearbeiten";
 "Save" = "Speichern";
+
+// Search Domain strings
+"Search Domains" = "Suchdomänen";
+"Search Domain" = "Suchdomäne";
+"URL Template" = "URL-Vorlage";
+"Add Search Domain" = "Suchdomäne hinzufügen";
+"Edit Search Domain" = "Suchdomäne bearbeiten";
+"Use {q} as placeholder for the search query. Example: https://www.google.com/search?q={q}" = "Verwenden Sie {q} als Platzhalter für die Suchanfrage. Beispiel: https://www.google.com/search?q={q}";

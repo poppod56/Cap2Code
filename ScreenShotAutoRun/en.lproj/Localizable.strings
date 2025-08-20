@@ -72,3 +72,11 @@
 "Add Pattern" = "Add Pattern";
 "Edit Pattern" = "Edit Pattern";
 "Save" = "Save";
+
+// Search Domain strings
+"Search Domains" = "Search Domains";
+"Search Domain" = "Search Domain";
+"URL Template" = "URL Template";
+"Add Search Domain" = "Add Search Domain";
+"Edit Search Domain" = "Edit Search Domain";
+"Use {q} as placeholder for the search query. Example: https://www.google.com/search?q={q}" = "Use {q} as placeholder for the search query. Example: https://www.google.com/search?q={q}";

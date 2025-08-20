@@ -72,3 +72,11 @@
 "Add Pattern" = "パターンを追加";
 "Edit Pattern" = "パターンを編集";
 "Save" = "保存";
+
+// Search Domain strings
+"Search Domains" = "検索ドメイン";
+"Search Domain" = "検索ドメイン";
+"URL Template" = "URLテンプレート";
+"Add Search Domain" = "検索ドメインを追加";
+"Edit Search Domain" = "検索ドメインを編集";
+"Use {q} as placeholder for the search query. Example: https://www.google.com/search?q={q}" = "検索クエリのプレースホルダーとして {q} を使用してください。例: https://www.google.com/search?q={q}";

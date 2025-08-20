@@ -72,3 +72,11 @@
 "Add Pattern" = "패턴 추가";
 "Edit Pattern" = "패턴 편집";
 "Save" = "저장";
+
+// Search Domain strings
+"Search Domains" = "검색 도메인";
+"Search Domain" = "검색 도메인";
+"URL Template" = "URL 템플릿";
+"Add Search Domain" = "검색 도메인 추가";
+"Edit Search Domain" = "검색 도메인 편집";
+"Use {q} as placeholder for the search query. Example: https://www.google.com/search?q={q}" = "검색 쿼리의 자리 표시자로 {q}를 사용하세요. 예: https://www.google.com/search?q={q}";

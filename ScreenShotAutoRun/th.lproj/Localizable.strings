@@ -72,3 +72,11 @@
 "Add Pattern" = "เพิ่มรูปแบบ";
 "Edit Pattern" = "แก้ไขรูปแบบ";
 "Save" = "บันทึก";
+
+// Search Domain strings
+"Search Domains" = "โดเมนการค้นหา";
+"Search Domain" = "โดเมนการค้นหา";
+"URL Template" = "เทมเพลต URL";
+"Add Search Domain" = "เพิ่มโดเมนการค้นหา";
+"Edit Search Domain" = "แก้ไขโดเมนการค้นหา";
+"Use {q} as placeholder for the search query. Example: https://www.google.com/search?q={q}" = "ใช้ {q} เป็นตัวแทนสำหรับคำค้นหา ตัวอย่าง: https://www.google.com/search?q={q}";

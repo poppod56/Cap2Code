@@ -72,3 +72,11 @@
 "Add Pattern" = "Добавить шаблон";
 "Edit Pattern" = "Редактировать шаблон";
 "Save" = "Сохранить";
+
+// Search Domain strings
+"Search Domains" = "Домены поиска";
+"Search Domain" = "Домен поиска";
+"URL Template" = "Шаблон URL";
+"Add Search Domain" = "Добавить домен поиска";
+"Edit Search Domain" = "Редактировать домен поиска";
+"Use {q} as placeholder for the search query. Example: https://www.google.com/search?q={q}" = "Используйте {q} как заполнитель для поискового запроса. Пример: https://www.google.com/search?q={q}";

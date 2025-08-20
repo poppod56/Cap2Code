@@ -49,6 +49,7 @@
 			membershipExceptions = (
 				JSONStore.swift,
 				PatternStore.swift,
+				SearchDomainStore.swift,
 			);
 			target = 93F33F372E45D0C300869B87 /* CodeScan */;
 		};

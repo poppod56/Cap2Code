@@ -478,8 +478,7 @@ struct PreviewDetailView: View {
     }
 
     private func searchURL(for id: String) -> URL? {
-        let q = id.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? id
-        return URL(string: "https://www.google.com/search?q=\(q)")
+        return SearchDomainStore.shared.searchURL(for: id)
     }
 }
 
@@ -578,8 +577,7 @@ struct CameraPreviewDetailView: View {
     }
     
     private func searchURL(for id: String) -> URL? {
-        let q = id.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? id
-        return URL(string: "https://www.google.com/search?q=\(q)")
+        return SearchDomainStore.shared.searchURL(for: id)
     }
 }
 

@@ -72,3 +72,11 @@
 "Add Pattern" = "添加模式";
 "Edit Pattern" = "编辑模式";
 "Save" = "保存";
+
+// Search Domain strings
+"Search Domains" = "搜索域";
+"Search Domain" = "搜索域";
+"URL Template" = "URL模板";
+"Add Search Domain" = "添加搜索域";
+"Edit Search Domain" = "编辑搜索域";
+"Use {q} as placeholder for the search query. Example: https://www.google.com/search?q={q}" = "使用 {q} 作为搜索查询的占位符。例如: https://www.google.com/search?q={q}";

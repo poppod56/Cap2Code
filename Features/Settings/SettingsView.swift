@@ -8,6 +8,10 @@ struct SettingsView: View {
                     Label(String(localized: "Patterns"), systemImage: "textformat.abc")
                 }
                 
+                NavigationLink(destination: SearchDomainSettingsView()) {
+                    Label(String(localized: "Search Domains"), systemImage: "magnifyingglass")
+                }
+                
                 // Future settings categories can be added here
                 // NavigationLink(destination: GeneralSettingsView()) {
                 //     Label(String(localized: "General"), systemImage: "gear")
@@ -105,6 +109,107 @@ private struct EditPatternView: View {
                         }
                         dismiss()
                     }
+                }
+            }
+        }
+    }
+}
+
+private struct SearchDomainSettingsView: View {
+    @ObservedObject private var store = SearchDomainStore.shared
+    @State private var showEdit = false
+    @State private var editing: SearchDomain?
+
+    var body: some View {
+        List {
+            ForEach(store.domains) { domain in
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text(domain.name)
+                        Text(domain.urlTemplate).font(.caption).foregroundStyle(.secondary)
+                    }
+                    Spacer()
+                    
+                    // Radio button style selection (only one can be enabled)
+                    Button(action: {
+                        store.setEnabled(domain, enabled: !domain.enabled)
+                    }) {
+                        Image(systemName: domain.enabled ? "circle.fill" : "circle")
+                            .foregroundColor(domain.enabled ? .blue : .secondary)
+                    }
+                    .buttonStyle(.plain)
+                }
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    editing = domain
+                    showEdit = true
+                }
+            }
+            .onDelete { idx in
+                for i in idx { store.delete(store.domains[i]) }
+            }
+        }
+        .navigationTitle(String(localized: "Search Domains"))
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            Button(action: {
+                editing = nil
+                showEdit = true
+            }) {
+                Image(systemName: "plus")
+            }
+        }
+        .sheet(isPresented: $showEdit) {
+            EditSearchDomainView(store: store, domain: editing)
+        }
+    }
+}
+
+private struct EditSearchDomainView: View {
+    @Environment(\.dismiss) private var dismiss
+    @ObservedObject var store: SearchDomainStore
+    var domain: SearchDomain?
+
+    @State private var name: String
+    @State private var urlTemplate: String
+
+    init(store: SearchDomainStore, domain: SearchDomain?) {
+        self.store = store
+        self.domain = domain
+        _name = State(initialValue: domain?.name ?? "")
+        _urlTemplate = State(initialValue: domain?.urlTemplate ?? "https://example.com/search?q={q}")
+    }
+
+    var body: some View {
+        NavigationStack {
+            Form {
+                Section {
+                    TextField(String(localized: "Name"), text: $name)
+                    TextField(String(localized: "URL Template"), text: $urlTemplate)
+                        .autocapitalization(.none)
+                        .font(.system(.body, design: .monospaced))
+                } header: {
+                    Text(String(localized: "Search Domain"))
+                } footer: {
+                    Text(String(localized: "Use {q} as placeholder for the search query. Example: https://www.google.com/search?q={q}"))
+                }
+            }
+            .navigationTitle(domain == nil ? String(localized: "Add Search Domain") : String(localized: "Edit Search Domain"))
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(String(localized: "Cancel")) { dismiss() }
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button(String(localized: "Save")) {
+                        if let existing = domain {
+                            store.update(existing, name: name, urlTemplate: urlTemplate)
+                        } else {
+                            store.add(name: name, urlTemplate: urlTemplate)
+                        }
+                        dismiss()
+                    }
+                    .disabled(name.isEmpty || urlTemplate.isEmpty || !urlTemplate.contains("{q}"))
                 }
             }
         }

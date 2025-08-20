@@ -72,3 +72,11 @@
 "Add Pattern" = "إضافة نمط";
 "Edit Pattern" = "تحرير النمط";
 "Save" = "حفظ";
+
+// Search Domain strings
+"Search Domains" = "نطاقات البحث";
+"Search Domain" = "نطاق البحث";
+"URL Template" = "قالب URL";
+"Add Search Domain" = "إضافة نطاق بحث";
+"Edit Search Domain" = "تحرير نطاق البحث";
+"Use {q} as placeholder for the search query. Example: https://www.google.com/search?q={q}" = "استخدم {q} كعنصر نائب لاستعلام البحث. مثال: https://www.google.com/search?q={q}";
