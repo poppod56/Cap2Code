@@ -6,6 +6,14 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		930331062E89EC2300F16358 /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 930331052E89EC2300F16358 /* FacebookLogin */; };
+		93C943FA2E89E31800667E29 /* FacebookAEM in Frameworks */ = {isa = PBXBuildFile; productRef = 93C943F92E89E31800667E29 /* FacebookAEM */; };
+		93C943FC2E89E31800667E29 /* FacebookBasics in Frameworks */ = {isa = PBXBuildFile; productRef = 93C943FB2E89E31800667E29 /* FacebookBasics */; };
+		93C943FE2E89E31800667E29 /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = 93C943FD2E89E31800667E29 /* FacebookCore */; };
+		93C944042E89E31800667E29 /* FacebookShare in Frameworks */ = {isa = PBXBuildFile; productRef = 93C944032E89E31800667E29 /* FacebookShare */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		93F33F462E45D0C400869B87 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -135,6 +143,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				930331062E89EC2300F16358 /* FacebookLogin in Frameworks */,
+				93C943FA2E89E31800667E29 /* FacebookAEM in Frameworks */,
+				93C944042E89E31800667E29 /* FacebookShare in Frameworks */,
+				93C943FE2E89E31800667E29 /* FacebookCore in Frameworks */,
+				93C943FC2E89E31800667E29 /* FacebookBasics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -155,6 +168,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		930331042E89EC2300F16358 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		93F33F2F2E45D0C300869B87 = {
 			isa = PBXGroup;
 			children = (
@@ -167,6 +187,7 @@
 				93F33F3A2E45D0C300869B87 /* ScreenShotAutoRun */,
 				93F33F482E45D0C400869B87 /* ScreenShotAutoRunTests */,
 				93F33F522E45D0C400869B87 /* ScreenShotAutoRunUITests */,
+				930331042E89EC2300F16358 /* Frameworks */,
 				93F33F392E45D0C300869B87 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -202,6 +223,11 @@
 			);
 			name = CodeScan;
 			packageProductDependencies = (
+				93C943F92E89E31800667E29 /* FacebookAEM */,
+				93C943FB2E89E31800667E29 /* FacebookBasics */,
+				93C943FD2E89E31800667E29 /* FacebookCore */,
+				93C944032E89E31800667E29 /* FacebookShare */,
+				930331052E89EC2300F16358 /* FacebookLogin */,
 			);
 			productName = CodeScan;
 			productReference = 93F33F382E45D0C300869B87 /* CodeScan.app */;
@@ -295,6 +321,9 @@
 			);
 			mainGroup = 93F33F2F2E45D0C300869B87;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				93C943F82E89E31800667E29 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 93F33F392E45D0C300869B87 /* Products */;
 			projectDirPath = "";
@@ -516,6 +545,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.1.0;
+				OTHER_LDFLAGS = "-ObjC";
+				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.poppod.cap2code;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -550,6 +581,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.1.0;
+				OTHER_LDFLAGS = "-ObjC";
+				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.poppod.cap2code;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -670,6 +703,45 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		93C943F82E89E31800667E29 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/facebook/facebook-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 14.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		930331052E89EC2300F16358 /* FacebookLogin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 93C943F82E89E31800667E29 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookLogin;
+		};
+		93C943F92E89E31800667E29 /* FacebookAEM */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 93C943F82E89E31800667E29 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookAEM;
+		};
+		93C943FB2E89E31800667E29 /* FacebookBasics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 93C943F82E89E31800667E29 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookBasics;
+		};
+		93C943FD2E89E31800667E29 /* FacebookCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 93C943F82E89E31800667E29 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookCore;
+		};
+		93C944032E89E31800667E29 /* FacebookShare */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 93C943F82E89E31800667E29 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookShare;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 93F33F302E45D0C300869B87 /* Project object */;
 }
