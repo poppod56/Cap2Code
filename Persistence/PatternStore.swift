@@ -53,6 +53,18 @@ final class PatternStore: ObservableObject {
         RegexPattern(id: UUID(), name: "ABCPPV1234567", pattern: "(?i)\\b[A-Z]{5,8}\\d{6,8}\\b", enabled: true, isDefault: true),
         RegexPattern(id: UUID(), name: "ABC-PPV1234567", pattern: "(?i)\\b[A-Z]{2,5}-[A-Z]{3}\\d{6,8}\\b", enabled: true, isDefault: true),
         
+        // Special format patterns (enabled by default)
+        RegexPattern(id: UUID(), name: "ABC_123", pattern: "(?i)\\b[A-Z]{2,8}_\\d{3,5}\\b", enabled: true, isDefault: true),
+        RegexPattern(id: UUID(), name: "ABC_1234", pattern: "(?i)\\b[A-Z]{2,8}_\\d{4,6}\\b", enabled: true, isDefault: true),
+        RegexPattern(id: UUID(), name: "123ABC-456", pattern: "(?i)\\b\\d{3,4}[A-Z]{3,5}-\\d{3,5}\\b", enabled: true, isDefault: true),
+        RegexPattern(id: UUID(), name: "123456-789", pattern: "(?i)\\b\\d{6}-\\d{3,4}\\b", enabled: true, isDefault: true),
+        RegexPattern(id: UUID(), name: "1234-567", pattern: "(?i)\\b\\d{4}-\\d{3,5}\\b", enabled: true, isDefault: true),
+        RegexPattern(id: UUID(), name: "1234-567-8", pattern: "(?i)\\b\\d{4}-\\d{3}-\\d{1,2}\\b", enabled: true, isDefault: true),
+        RegexPattern(id: UUID(), name: "1ABC-123456", pattern: "(?i)\\b\\d{1}[A-Z]{3,5}-\\d{6,8}\\b", enabled: true, isDefault: true),
+        RegexPattern(id: UUID(), name: "ABC-123456789", pattern: "(?i)\\b[A-Z]{2,5}-\\d{9,10}\\b", enabled: true, isDefault: true),
+        RegexPattern(id: UUID(), name: "ABC-PPV-123456789", pattern: "(?i)\\b[A-Z]{2,5}-[A-Z]{3}-\\d{9,10}\\b", enabled: true, isDefault: true),
+        RegexPattern(id: UUID(), name: "1234ABC", pattern: "(?i)\\b\\d{4}[A-Z]{3,5}\\b", enabled: true, isDefault: true),
+        
         // Code scanning patterns (disabled by default)
         RegexPattern(id: UUID(), name: String(localized: "QR/Barcode"), pattern: "\\b\\d{8,20}\\b", enabled: false, isDefault: true),
         RegexPattern(id: UUID(), name: String(localized: "Product Code"), pattern: "(?i)\\b(?:SKU|PROD|ITEM)[-_]?[A-Z0-9]{4,12}\\b", enabled: false, isDefault: true),
