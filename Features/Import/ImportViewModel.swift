@@ -88,7 +88,8 @@ final class ImportViewModel: ObservableObject {
         do {
             try await photo.deleteAssets(toDelete)
             assets.removeAll { ids.contains($0.localIdentifier) }
-            store.delete(Array(ids))
+            // Don't delete scan results - keep them even after deleting photos
+            // store.delete(Array(ids))
         } catch {
         }
     }

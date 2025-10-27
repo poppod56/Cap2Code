@@ -27,11 +27,14 @@ final class ResultsViewModel: ObservableObject {
     }
 
     func exportCSV() -> URL? {
-        var csv = "assetId,id,date,category\n"
+        var csv = "assetId,id,date,category,searchURL\n"
         let formatter = ISO8601DateFormatter()
+        let searchDomainStore = SearchDomainStore.shared
+        
         for p in allItems {
             for c in p.ids {
-                csv += "\(p.localId),\(c.value),\(formatter.string(from: p.createdAt)),\(p.category)\n"
+                let searchURL = searchDomainStore.searchURL(for: c.value)?.absoluteString ?? ""
+                csv += "\(p.localId),\(c.value),\(formatter.string(from: p.createdAt)),\(p.category),\(searchURL)\n"
             }
         }
         let url = FileManager.default.temporaryDirectory.appendingPathComponent("results.csv")
