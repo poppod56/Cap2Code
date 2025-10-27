@@ -92,6 +92,7 @@
 
 // Pattern Help Inline Strings
 "About Patterns" = "About Patterns";
+"How to use patterns" = "How to use patterns";
 "Patterns use regular expressions (regex) to detect IDs and codes in your scanned images." = "Patterns use regular expressions (regex) to detect IDs and codes in your scanned images.";
 "Examples:" = "Examples:";
 "Pattern_Example_1" = "\"ABC-123\" matches: FOO-456, BAR-789";
@@ -101,6 +102,7 @@
 
 // Search Domain Help Inline Strings
 "About Search Domains" = "About Search Domains";
+"How to use search domains" = "How to use search domains";
 "Add your favorite search engines to look up detected IDs on the web." = "Add your favorite search engines to look up detected IDs on the web.";
 "URL Template Format:" = "URL Template Format:";
 "Domain_Format_Description" = "Use {q} as a placeholder for the search query";

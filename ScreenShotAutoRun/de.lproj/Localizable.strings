@@ -92,6 +92,7 @@
 
 // Pattern Help Inline Strings
 "About Patterns" = "Über Muster";
+"How to use patterns" = "So verwenden Sie Muster";
 "Patterns use regular expressions (regex) to detect IDs and codes in your scanned images." = "Muster verwenden reguläre Ausdrücke (Regex), um IDs und Codes in Ihren gescannten Bildern zu erkennen.";
 "Examples:" = "Beispiele:";
 "Pattern_Example_1" = "\"ABC-123\" entspricht: FOO-456, BAR-789";
@@ -101,6 +102,7 @@
 
 // Search Domain Help Inline Strings
 "About Search Domains" = "Über Suchdomänen";
+"How to use search domains" = "So verwenden Sie Suchdomänen";
 "Add your favorite search engines to look up detected IDs on the web." = "Fügen Sie Ihre bevorzugten Suchmaschinen hinzu, um erkannte IDs im Web zu suchen.";
 "URL Template Format:" = "URL-Vorlagenformat:";
 "Domain_Format_Description" = "Verwenden Sie {q} als Platzhalter für die Suchanfrage";

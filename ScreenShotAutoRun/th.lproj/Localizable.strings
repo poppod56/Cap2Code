@@ -92,6 +92,7 @@
 
 // Pattern Help Inline Strings
 "About Patterns" = "เกี่ยวกับรูปแบบ";
+"How to use patterns" = "วิธีใช้รูปแบบ";
 "Patterns use regular expressions (regex) to detect IDs and codes in your scanned images." = "รูปแบบใช้นิพจน์ปกติ (regex) เพื่อตรวจจับ ID และรหัสต่างๆ ในภาพที่สแกน";
 "Examples:" = "ตัวอย่าง:";
 "Pattern_Example_1" = "\"ABC-123\" จับคู่: FOO-456, BAR-789";
@@ -101,6 +102,7 @@
 
 // Search Domain Help Inline Strings
 "About Search Domains" = "เกี่ยวกับโดเมนการค้นหา";
+"How to use search domains" = "วิธีใช้โดเมนการค้นหา";
 "Add your favorite search engines to look up detected IDs on the web." = "เพิ่มเครื่องมือค้นหาที่คุณชื่นชอบเพื่อค้นหา ID ที่ตรวจพบบนเว็บ";
 "URL Template Format:" = "รูปแบบเทมเพลต URL:";
 "Domain_Format_Description" = "ใช้ {q} เป็นตัวแทนสำหรับคำค้นหา";

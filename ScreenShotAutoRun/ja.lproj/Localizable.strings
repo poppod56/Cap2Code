@@ -92,6 +92,7 @@
 
 // Pattern Help Inline Strings
 "About Patterns" = "パターンについて";
+"How to use patterns" = "パターンの使い方";
 "Patterns use regular expressions (regex) to detect IDs and codes in your scanned images." = "パターンは正規表現（regex）を使用して、スキャンした画像内のIDやコードを検出します。";
 "Examples:" = "例:";
 "Pattern_Example_1" = "\"ABC-123\" 一致: FOO-456, BAR-789";
@@ -101,6 +102,7 @@
 
 // Search Domain Help Inline Strings
 "About Search Domains" = "検索ドメインについて";
+"How to use search domains" = "検索ドメインの使い方";
 "Add your favorite search engines to look up detected IDs on the web." = "お気に入りの検索エンジンを追加して、検出されたIDをウェブで検索できます。";
 "URL Template Format:" = "URLテンプレート形式:";
 "Domain_Format_Description" = "検索クエリのプレースホルダーとして {q} を使用";
