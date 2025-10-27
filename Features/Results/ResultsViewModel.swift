@@ -43,8 +43,8 @@ final class ResultsViewModel: ObservableObject {
                 let escapedCategory = p.category.replacingOccurrences(of: "\"", with: "\"\"")
                 
                 // Use HYPERLINK formula for clickable links in Excel/Google Sheets
-                let idHyperlink = searchURL.isEmpty ? escapedId : "=HYPERLINK(\"\(searchURL)\",\"\(escapedId)\")"
-                let urlHyperlink = searchURL.isEmpty ? "" : "=HYPERLINK(\"\(searchURL)\",\"Open Link\")"
+                let idHyperlink = searchURL.isEmpty ? escapedId : "\"=HYPERLINK(\"\"\(searchURL)\"\",\"\"\(escapedId)\"\")\""
+                let urlHyperlink = searchURL.isEmpty ? "" : "\"=HYPERLINK(\"\"\(searchURL)\"\",\"\"Open Link\"\")\""
                 
                 csv += "\(p.localId),\(idHyperlink),\(formatter.string(from: p.createdAt)),\"\(escapedCategory)\",\(urlHyperlink)\n"
             }
@@ -75,8 +75,8 @@ final class ResultsViewModel: ObservableObject {
                     let escapedCategory = p.category.replacingOccurrences(of: "\"", with: "\"\"")
                     
                     // Use HYPERLINK formula for clickable links in Excel/Google Sheets
-                    let idHyperlink = searchURL.isEmpty ? escapedId : "=HYPERLINK(\"\(searchURL)\",\"\(escapedId)\")"
-                    let urlHyperlink = searchURL.isEmpty ? "" : "=HYPERLINK(\"\(searchURL)\",\"Open Link\")"
+                    let idHyperlink = searchURL.isEmpty ? escapedId : "\"=HYPERLINK(\"\"\(searchURL)\"\",\"\"\(escapedId)\"\")\""
+                    let urlHyperlink = searchURL.isEmpty ? "" : "\"=HYPERLINK(\"\"\(searchURL)\"\",\"\"Open Link\"\")\""
                     
                     csv += "\(p.localId),\(idHyperlink),\(formatter.string(from: p.createdAt)),\"\(escapedCategory)\",\(urlHyperlink)\n"
                 }
