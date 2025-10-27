@@ -27,10 +27,19 @@
 "Import" = "Importar";
 "Photo Library" = "Biblioteca";
 "Files" = "Archivos";
-"Generic ID" = "Identificación genérica";
+// Pattern names
+"Generic ID" = "ID genérico";
 "Phone" = "Teléfono";
 "Invoice" = "Factura";
-"Select Album" = "Álbum seleccionado";
+"QR/Barcode" = "QR/Código de barras";
+"Product Code" = "Código de producto";
+"Serial Number" = "Número de serie";
+"License Key" = "Clave de licencia";
+"Tracking Number" = "Número de seguimiento";
+"Order ID" = "ID de pedido";
+"Reference Number" = "Número de referencia";
+
+"Select Album" = "Seleccionar álbum";
 "Loading Photos..." = "Cargando fotos ...";
 
 // Camera functionality strings

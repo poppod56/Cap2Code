@@ -27,10 +27,19 @@
 "Import" = "Импорт";
 "Photo Library" = "Фото библиотека";
 "Files" = "Файлы";
-"Generic ID" = "Общий идентификатор";
+// Pattern names
+"Generic ID" = "Общий ID";
 "Phone" = "Телефон";
 "Invoice" = "Счет";
-"Select Album" = "Выберите альбом";
+"QR/Barcode" = "QR/Штрихкод";
+"Product Code" = "Код продукта";
+"Serial Number" = "Серийный номер";
+"License Key" = "Лицензионный ключ";
+"Tracking Number" = "Номер отслеживания";
+"Order ID" = "ID заказа";
+"Reference Number" = "Номер ссылки";
+
+"Select Album" = "Выбрать альбом";
 "Loading Photos..." = "Загрузка фотографий ...";
 
 // Camera functionality strings

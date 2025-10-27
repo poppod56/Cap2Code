@@ -27,9 +27,18 @@
 "Import" = "นำเข้า";
 "Photo Library" = "คลังรูปภาพ";
 "Files" = "ไฟล์";
-"Generic ID" = "รหัสทั่วไป";
+// Pattern names
+"Generic ID" = "ID ทั่วไป";
 "Phone" = "โทรศัพท์";
 "Invoice" = "ใบแจ้งหนี้";
+"QR/Barcode" = "คิวอาร์โค้ด/บาร์โค้ด";
+"Product Code" = "รหัสสินค้า";
+"Serial Number" = "หมายเลขซีเรียล";
+"License Key" = "รหัสลิขสิทธิ์";
+"Tracking Number" = "เลขพัสดุ";
+"Order ID" = "เลขที่ออเดอร์";
+"Reference Number" = "เลขที่อ้างอิง";
+
 "Select Album" = "เลือกอัลบั้ม";
 "Loading Photos..." = "กำลังโหลดรูปภาพ...";
 

@@ -27,9 +27,18 @@
 "Import" = "가져오기";
 "Photo Library" = "사진 보관함";
 "Files" = "파일";
+// Pattern names
 "Generic ID" = "일반 ID";
 "Phone" = "전화번호";
-"Invoice" = "인보이스";
+"Invoice" = "송장";
+"QR/Barcode" = "QR/바코드";
+"Product Code" = "제품 코드";
+"Serial Number" = "일련 번호";
+"License Key" = "라이선스 키";
+"Tracking Number" = "추적 번호";
+"Order ID" = "주문 ID";
+"Reference Number" = "참조 번호";
+
 "Select Album" = "앨범 선택";
 "Loading Photos..." = "사진 불러오는 중...";
 

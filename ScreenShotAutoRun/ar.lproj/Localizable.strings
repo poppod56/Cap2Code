@@ -27,10 +27,19 @@
 "Import" = "يستورد";
 "Photo Library" = "مكتبة الصور";
 "Files" = "الملفات";
+// Pattern names
 "Generic ID" = "معرف عام";
 "Phone" = "هاتف";
 "Invoice" = "فاتورة";
-"Select Album" = "حدد الألبوم";
+"QR/Barcode" = "رمز الاستجابة السريعة/الباركود";
+"Product Code" = "رمز المنتج";
+"Serial Number" = "الرقم التسلسلي";
+"License Key" = "مفتاح الترخيص";
+"Tracking Number" = "رقم التتبع";
+"Order ID" = "معرف الطلب";
+"Reference Number" = "الرقم المرجعي";
+
+"Select Album" = "اختر الألبوم";
 "Loading Photos..." = "تحميل الصور ...";
 
 // Camera functionality strings

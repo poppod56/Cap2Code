@@ -27,9 +27,18 @@
 "Import" = "Import";
 "Photo Library" = "Fotobibliothek";
 "Files" = "Dateien";
+// Pattern names
 "Generic ID" = "Generische ID";
 "Phone" = "Telefon";
 "Invoice" = "Rechnung";
+"QR/Barcode" = "QR/Barcode";
+"Product Code" = "Produktcode";
+"Serial Number" = "Seriennummer";
+"License Key" = "Lizenzschlüssel";
+"Tracking Number" = "Sendungsnummer";
+"Order ID" = "Bestellnummer";
+"Reference Number" = "Referenznummer";
+
 "Select Album" = "Album auswählen";
 "Loading Photos..." = "Fotos laden ...";
 

@@ -27,10 +27,19 @@
 "Import" = "进口";
 "Photo Library" = "照片库";
 "Files" = "文件";
+// Pattern names
 "Generic ID" = "通用ID";
 "Phone" = "电话";
 "Invoice" = "发票";
-"Select Album" = "选择专辑";
+"QR/Barcode" = "二维码/条形码";
+"Product Code" = "产品代码";
+"Serial Number" = "序列号";
+"License Key" = "许可证密钥";
+"Tracking Number" = "跟踪号码";
+"Order ID" = "订单ID";
+"Reference Number" = "参考号";
+
+"Select Album" = "选择相册";
 "Loading Photos..." = "加载照片...";
 
 // Camera functionality strings
