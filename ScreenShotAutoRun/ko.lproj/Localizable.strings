@@ -12,6 +12,7 @@
 "Preview" = "미리보기";
 "Image not available" = "이미지를 사용할 수 없음";
 "Export CSV" = "CSV 내보내기";
+"Exporting CSV..." = "CSV 내보내는 중...";
 "Photos access not granted" = "사진 접근이 허용되지 않음";
 "Unable to convert to CGImage" = "CGImage로 변환할 수 없음";
 "Resume" = "재개";

@@ -11,7 +11,8 @@
 "OCR Text" = "OCR -Text";
 "Preview" = "Vorschau";
 "Image not available" = "Bild nicht verfügbar";
-"Export CSV" = "Exportieren Sie CSV";
+"Export CSV" = "CSV exportieren";
+"Exporting CSV..." = "CSV wird exportiert...";
 "Photos access not granted" = "Fotos zugreifen nicht gewährt";
 "Unable to convert to CGImage" = "Kann nicht in cgimage konvertieren";
 "Resume" = "Wieder aufnehmen";

@@ -12,6 +12,7 @@
 "Preview" = "Предварительный просмотр";
 "Image not available" = "Изображение недоступно";
 "Export CSV" = "Экспорт CSV";
+"Exporting CSV..." = "Экспорт CSV...";
 "Photos access not granted" = "Доступ к фотографиям не предоставлен";
 "Unable to convert to CGImage" = "Невозможно преобразовать в cgimage";
 "Resume" = "Резюме";

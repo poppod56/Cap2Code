@@ -12,6 +12,7 @@
 "Preview" = "Visualização";
 "Image not available" = "Imagem não disponível";
 "Export CSV" = "Exportar CSV";
+"Exporting CSV..." = "Exportando CSV...";
 "Photos access not granted" = "Fotos Access não concedido";
 "Unable to convert to CGImage" = "Incapaz de converter em cGimage";
 "Resume" = "Retomar";

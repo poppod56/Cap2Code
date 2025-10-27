@@ -12,6 +12,7 @@
 "Preview" = "プレビュー";
 "Image not available" = "画像がありません";
 "Export CSV" = "CSV をエクスポート";
+"Exporting CSV..." = "CSV をエクスポート中...";
 "Photos access not granted" = "フォトへのアクセスが許可されていません";
 "Unable to convert to CGImage" = "CGImage に変換できません";
 "Resume" = "再開";

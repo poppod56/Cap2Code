@@ -11,6 +11,7 @@ final class ResultsViewModel: ObservableObject {
     @Published var cards: [ResultCard] = []
     @Published var categories: [String] = ["All"]
     @Published var selectedCategory: String = "All"
+    @Published var isExporting: Bool = false
     private var allItems: [ProcessedAsset] = []
     let store = JSONStore.shared
 
@@ -27,6 +28,9 @@ final class ResultsViewModel: ObservableObject {
     }
 
     func exportCSV() -> URL? {
+        isExporting = true
+        defer { isExporting = false }
+        
         var csv = "assetId,id,date,category,searchURL\n"
         let formatter = ISO8601DateFormatter()
         let searchDomainStore = SearchDomainStore.shared
@@ -44,6 +48,32 @@ final class ResultsViewModel: ObservableObject {
         } catch {
             return nil
         }
+    }
+    
+    func exportCSVAsync() async -> URL? {
+        await MainActor.run { isExporting = true }
+        defer { Task { await MainActor.run { isExporting = false } } }
+        
+        return await Task.detached {
+            var csv = "assetId,id,date,category,searchURL\n"
+            let formatter = ISO8601DateFormatter()
+            let searchDomainStore = SearchDomainStore.shared
+            
+            for p in await self.allItems {
+                for c in p.ids {
+                    let searchURL = searchDomainStore.searchURL(for: c.value)?.absoluteString ?? ""
+                    csv += "\(p.localId),\(c.value),\(formatter.string(from: p.createdAt)),\(p.category),\(searchURL)\n"
+                }
+            }
+            
+            let url = FileManager.default.temporaryDirectory.appendingPathComponent("results.csv")
+            do {
+                try csv.write(to: url, atomically: true, encoding: .utf8)
+                return url
+            } catch {
+                return nil
+            }
+        }.value
     }
 
     func delete(at offsets: IndexSet) {

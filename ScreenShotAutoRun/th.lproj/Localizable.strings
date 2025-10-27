@@ -12,6 +12,7 @@
 "Preview" = "ดูตัวอย่าง";
 "Image not available" = "ไม่มีภาพ";
 "Export CSV" = "ส่งออก CSV";
+"Exporting CSV..." = "กำลังส่งออก CSV...";
 "Photos access not granted" = "ไม่ได้รับอนุญาตให้เข้าถึงรูปภาพ";
 "Unable to convert to CGImage" = "ไม่สามารถแปลงเป็น CGImage ได้";
 "Resume" = "ดำเนินการต่อ";

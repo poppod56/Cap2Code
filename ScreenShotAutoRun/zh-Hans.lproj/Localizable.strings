@@ -11,7 +11,8 @@
 "OCR Text" = "OCR文字";
 "Preview" = "预览";
 "Image not available" = "图像不可用";
-"Export CSV" = "出口CSV";
+"Export CSV" = "导出 CSV";
+"Exporting CSV..." = "正在导出 CSV...";
 "Photos access not granted" = "未授予的照片访问";
 "Unable to convert to CGImage" = "无法转换为cgimage";
 "Resume" = "恢复";
