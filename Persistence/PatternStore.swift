@@ -86,8 +86,21 @@ final class PatternStore: ObservableObject {
         if let data = try? Data(contentsOf: url),
            let arr = try? JSONDecoder().decode([RegexPattern].self, from: data) {
             patterns = arr
+            // Merge new built-in patterns from app updates
+            mergeNewBuiltInPatterns()
         } else {
             patterns = Self.builtIn
+        }
+    }
+    
+    /// Merge new built-in patterns that don't exist in saved data
+    private func mergeNewBuiltInPatterns() {
+        let existingNames = Set(patterns.map { $0.name })
+        let newPatterns = Self.builtIn.filter { !existingNames.contains($0.name) }
+        
+        if !newPatterns.isEmpty {
+            patterns.append(contentsOf: newPatterns)
+            save() // Save merged patterns
         }
     }
 

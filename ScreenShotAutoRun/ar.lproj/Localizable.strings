@@ -89,3 +89,21 @@
 "Add Search Domain" = "إضافة نطاق بحث";
 "Edit Search Domain" = "تحرير نطاق البحث";
 "Use {q} as placeholder for the search query. Example: https://www.google.com/search?q={q}" = "استخدم {q} كعنصر نائب لاستعلام البحث. مثال: https://www.google.com/search?q={q}";
+
+// Pattern Help Inline Strings
+"About Patterns" = "حول الأنماط";
+"Patterns use regular expressions (regex) to detect IDs and codes in your scanned images." = "تستخدم الأنماط التعبيرات النمطية (regex) للكشف عن المعرفات والأكواد في صورك الممسوحة ضوئيًا.";
+"Examples:" = "أمثلة:";
+"Pattern_Example_1" = "\"ABC-123\" يطابق: FOO-456, BAR-789";
+"Pattern_Example_2" = "\"[A-Z]{3}\\d{4}\" يطابق: ABC1234, XYZ5678";
+"Pattern_Example_3" = "\"\\d{10}\" يطابق: 1234567890";
+"Pattern_Tips" = "💡 قم بتمكين الأنماط التي تحتاجها فقط لدقة أفضل. يمكن تعطيل الأنماط المدمجة ولكن لا يمكن حذفها.";
+
+// Search Domain Help Inline Strings
+"About Search Domains" = "حول نطاقات البحث";
+"Add your favorite search engines to look up detected IDs on the web." = "أضف محركات البحث المفضلة لديك للبحث عن المعرفات المكتشفة على الويب.";
+"URL Template Format:" = "تنسيق قالب URL:";
+"Domain_Format_Description" = "استخدم {q} كعنصر نائب لاستعلام البحث";
+"Domain_Example_1" = "Google: https://www.google.com/search?q={q}";
+"Domain_Example_2" = "مخصص: https://example.com/lookup?id={q}";
+"Domain_How_It_Works" = "💡 عند البحث عن \"ABC-123\"، سيتم استبدال {q} بـ \"ABC-123\" في عنوان URL.";

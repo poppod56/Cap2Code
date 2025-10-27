@@ -89,3 +89,21 @@
 "Add Search Domain" = "検索ドメインを追加";
 "Edit Search Domain" = "検索ドメインを編集";
 "Use {q} as placeholder for the search query. Example: https://www.google.com/search?q={q}" = "検索クエリのプレースホルダーとして {q} を使用してください。例: https://www.google.com/search?q={q}";
+
+// Pattern Help Inline Strings
+"About Patterns" = "パターンについて";
+"Patterns use regular expressions (regex) to detect IDs and codes in your scanned images." = "パターンは正規表現（regex）を使用して、スキャンした画像内のIDやコードを検出します。";
+"Examples:" = "例:";
+"Pattern_Example_1" = "\"ABC-123\" 一致: FOO-456, BAR-789";
+"Pattern_Example_2" = "\"[A-Z]{3}\\d{4}\" 一致: ABC1234, XYZ5678";
+"Pattern_Example_3" = "\"\\d{10}\" 一致: 1234567890";
+"Pattern_Tips" = "💡 精度を上げるために必要なパターンのみを有効にしてください。組み込みパターンは無効にできますが削除できません。";
+
+// Search Domain Help Inline Strings
+"About Search Domains" = "検索ドメインについて";
+"Add your favorite search engines to look up detected IDs on the web." = "お気に入りの検索エンジンを追加して、検出されたIDをウェブで検索できます。";
+"URL Template Format:" = "URLテンプレート形式:";
+"Domain_Format_Description" = "検索クエリのプレースホルダーとして {q} を使用";
+"Domain_Example_1" = "Google: https://www.google.com/search?q={q}";
+"Domain_Example_2" = "カスタム: https://example.com/lookup?id={q}";
+"Domain_How_It_Works" = "💡 \"ABC-123\"を検索すると、URLの {q} が \"ABC-123\" に置き換えられます。";

@@ -89,3 +89,21 @@
 "Add Search Domain" = "Add Search Domain";
 "Edit Search Domain" = "Edit Search Domain";
 "Use {q} as placeholder for the search query. Example: https://www.google.com/search?q={q}" = "Use {q} as placeholder for the search query. Example: https://www.google.com/search?q={q}";
+
+// Pattern Help Inline Strings
+"About Patterns" = "About Patterns";
+"Patterns use regular expressions (regex) to detect IDs and codes in your scanned images." = "Patterns use regular expressions (regex) to detect IDs and codes in your scanned images.";
+"Examples:" = "Examples:";
+"Pattern_Example_1" = "\"ABC-123\" matches: FOO-456, BAR-789";
+"Pattern_Example_2" = "\"[A-Z]{3}\\d{4}\" matches: ABC1234, XYZ5678";
+"Pattern_Example_3" = "\"\\d{10}\" matches: 1234567890";
+"Pattern_Tips" = "💡 Enable only the patterns you need for better accuracy. Built-in patterns can be disabled but not deleted.";
+
+// Search Domain Help Inline Strings
+"About Search Domains" = "About Search Domains";
+"Add your favorite search engines to look up detected IDs on the web." = "Add your favorite search engines to look up detected IDs on the web.";
+"URL Template Format:" = "URL Template Format:";
+"Domain_Format_Description" = "Use {q} as a placeholder for the search query";
+"Domain_Example_1" = "Google: https://www.google.com/search?q={q}";
+"Domain_Example_2" = "Custom: https://example.com/lookup?id={q}";
+"Domain_How_It_Works" = "💡 When you search \"ABC-123\", {q} will be replaced with \"ABC-123\" in the URL.";

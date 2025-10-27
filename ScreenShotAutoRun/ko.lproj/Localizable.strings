@@ -89,3 +89,21 @@
 "Add Search Domain" = "검색 도메인 추가";
 "Edit Search Domain" = "검색 도메인 편집";
 "Use {q} as placeholder for the search query. Example: https://www.google.com/search?q={q}" = "검색 쿼리의 자리 표시자로 {q}를 사용하세요. 예: https://www.google.com/search?q={q}";
+
+// Pattern Help Inline Strings
+"About Patterns" = "패턴 정보";
+"Patterns use regular expressions (regex) to detect IDs and codes in your scanned images." = "패턴은 정규식(regex)을 사용하여 스캔한 이미지에서 ID와 코드를 감지합니다.";
+"Examples:" = "예시:";
+"Pattern_Example_1" = "\"ABC-123\" 일치: FOO-456, BAR-789";
+"Pattern_Example_2" = "\"[A-Z]{3}\\d{4}\" 일치: ABC1234, XYZ5678";
+"Pattern_Example_3" = "\"\\d{10}\" 일치: 1234567890";
+"Pattern_Tips" = "💡 더 나은 정확도를 위해 필요한 패턴만 활성화하세요. 기본 패턴은 비활성화할 수 있지만 삭제할 수 없습니다.";
+
+// Search Domain Help Inline Strings
+"About Search Domains" = "검색 도메인 정보";
+"Add your favorite search engines to look up detected IDs on the web." = "즐겨 사용하는 검색 엔진을 추가하여 웹에서 감지된 ID를 검색하세요.";
+"URL Template Format:" = "URL 템플릿 형식:";
+"Domain_Format_Description" = "검색 쿼리의 자리 표시자로 {q} 사용";
+"Domain_Example_1" = "Google: https://www.google.com/search?q={q}";
+"Domain_Example_2" = "사용자 정의: https://example.com/lookup?id={q}";
+"Domain_How_It_Works" = "💡 \"ABC-123\"을 검색하면 URL의 {q}가 \"ABC-123\"으로 대체됩니다.";

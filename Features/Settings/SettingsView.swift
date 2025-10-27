@@ -32,6 +32,51 @@ private struct PatternSettingsView: View {
 
     var body: some View {
         List {
+            // Inline Help Section
+            Section {
+                VStack(alignment: .leading, spacing: 8) {
+                    Label(String(localized: "About Patterns"), systemImage: "info.circle")
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(.primary)
+                    
+                    Text(String(localized: "Patterns use regular expressions (regex) to detect IDs and codes in your scanned images."))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(String(localized: "Examples:"))
+                            .font(.caption.weight(.medium))
+                            .foregroundStyle(.secondary)
+                        
+                        HStack(spacing: 4) {
+                            Text("•").foregroundStyle(.secondary)
+                            Text(String(localized: "Pattern_Example_1"))
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                        HStack(spacing: 4) {
+                            Text("•").foregroundStyle(.secondary)
+                            Text(String(localized: "Pattern_Example_2"))
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                        HStack(spacing: 4) {
+                            Text("•").foregroundStyle(.secondary)
+                            Text(String(localized: "Pattern_Example_3"))
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    .padding(.leading, 4)
+                    
+                    Text(String(localized: "Pattern_Tips"))
+                        .font(.caption)
+                        .foregroundStyle(.blue)
+                        .padding(.top, 4)
+                }
+                .padding(.vertical, 4)
+            }
+            
             ForEach(store.patterns) { p in
                 HStack {
                     VStack(alignment: .leading) {
@@ -122,6 +167,56 @@ private struct SearchDomainSettingsView: View {
 
     var body: some View {
         List {
+            // Inline Help Section
+            Section {
+                VStack(alignment: .leading, spacing: 8) {
+                    Label(String(localized: "About Search Domains"), systemImage: "info.circle")
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(.primary)
+                    
+                    Text(String(localized: "Add your favorite search engines to look up detected IDs on the web."))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(String(localized: "URL Template Format:"))
+                            .font(.caption.weight(.medium))
+                            .foregroundStyle(.secondary)
+                        
+                        Text(String(localized: "Domain_Format_Description"))
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .padding(.leading, 4)
+                    }
+                    
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(String(localized: "Examples:"))
+                            .font(.caption.weight(.medium))
+                            .foregroundStyle(.secondary)
+                        
+                        HStack(spacing: 4) {
+                            Text("•").foregroundStyle(.secondary)
+                            Text(String(localized: "Domain_Example_1"))
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                        HStack(spacing: 4) {
+                            Text("•").foregroundStyle(.secondary)
+                            Text(String(localized: "Domain_Example_2"))
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    .padding(.leading, 4)
+                    
+                    Text(String(localized: "Domain_How_It_Works"))
+                        .font(.caption)
+                        .foregroundStyle(.blue)
+                        .padding(.top, 4)
+                }
+                .padding(.vertical, 4)
+            }
+            
             ForEach(store.domains) { domain in
                 HStack {
                     VStack(alignment: .leading) {

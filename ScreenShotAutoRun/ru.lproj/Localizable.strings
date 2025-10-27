@@ -89,3 +89,21 @@
 "Add Search Domain" = "Добавить домен поиска";
 "Edit Search Domain" = "Редактировать домен поиска";
 "Use {q} as placeholder for the search query. Example: https://www.google.com/search?q={q}" = "Используйте {q} как заполнитель для поискового запроса. Пример: https://www.google.com/search?q={q}";
+
+// Pattern Help Inline Strings
+"About Patterns" = "О шаблонах";
+"Patterns use regular expressions (regex) to detect IDs and codes in your scanned images." = "Шаблоны используют регулярные выражения (regex) для обнаружения ID и кодов в отсканированных изображениях.";
+"Examples:" = "Примеры:";
+"Pattern_Example_1" = "\"ABC-123\" соответствует: FOO-456, BAR-789";
+"Pattern_Example_2" = "\"[A-Z]{3}\\d{4}\" соответствует: ABC1234, XYZ5678";
+"Pattern_Example_3" = "\"\\d{10}\" соответствует: 1234567890";
+"Pattern_Tips" = "💡 Включайте только нужные шаблоны для лучшей точности. Встроенные шаблоны можно отключить, но нельзя удалить.";
+
+// Search Domain Help Inline Strings
+"About Search Domains" = "О доменах поиска";
+"Add your favorite search engines to look up detected IDs on the web." = "Добавьте ваши любимые поисковые системы для поиска обнаруженных ID в интернете.";
+"URL Template Format:" = "Формат шаблона URL:";
+"Domain_Format_Description" = "Используйте {q} как заполнитель для поискового запроса";
+"Domain_Example_1" = "Google: https://www.google.com/search?q={q}";
+"Domain_Example_2" = "Пользовательский: https://example.com/lookup?id={q}";
+"Domain_How_It_Works" = "💡 При поиске \"ABC-123\", {q} будет заменено на \"ABC-123\" в URL.";

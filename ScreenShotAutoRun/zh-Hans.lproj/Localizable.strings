@@ -89,3 +89,21 @@
 "Add Search Domain" = "添加搜索域";
 "Edit Search Domain" = "编辑搜索域";
 "Use {q} as placeholder for the search query. Example: https://www.google.com/search?q={q}" = "使用 {q} 作为搜索查询的占位符。例如: https://www.google.com/search?q={q}";
+
+// Pattern Help Inline Strings
+"About Patterns" = "关于模式";
+"Patterns use regular expressions (regex) to detect IDs and codes in your scanned images." = "模式使用正则表达式（regex）来检测扫描图像中的ID和代码。";
+"Examples:" = "示例:";
+"Pattern_Example_1" = "\"ABC-123\" 匹配: FOO-456, BAR-789";
+"Pattern_Example_2" = "\"[A-Z]{3}\\d{4}\" 匹配: ABC1234, XYZ5678";
+"Pattern_Example_3" = "\"\\d{10}\" 匹配: 1234567890";
+"Pattern_Tips" = "💡 仅启用所需的模式以提高准确性。内置模式可以禁用但不能删除。";
+
+// Search Domain Help Inline Strings
+"About Search Domains" = "关于搜索域";
+"Add your favorite search engines to look up detected IDs on the web." = "添加您喜欢的搜索引擎以在网络上查找检测到的ID。";
+"URL Template Format:" = "URL模板格式:";
+"Domain_Format_Description" = "使用 {q} 作为搜索查询的占位符";
+"Domain_Example_1" = "Google: https://www.google.com/search?q={q}";
+"Domain_Example_2" = "自定义: https://example.com/lookup?id={q}";
+"Domain_How_It_Works" = "💡 当您搜索 \"ABC-123\" 时，URL中的 {q} 将被替换为 \"ABC-123\"。";

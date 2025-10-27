@@ -81,3 +81,29 @@
 "Add Pattern" = "Ajouter un modèle";
 "Edit Pattern" = "Modifier le modèle";
 "Save" = "Enregistrer";
+
+// Search Domain strings
+"Search Domains" = "Domaines de recherche";
+"Search Domain" = "Domaine de recherche";
+"URL Template" = "Modèle d'URL";
+"Add Search Domain" = "Ajouter un domaine de recherche";
+"Edit Search Domain" = "Modifier le domaine de recherche";
+"Use {q} as placeholder for the search query. Example: https://www.google.com/search?q={q}" = "Utilisez {q} comme espace réservé pour la requête de recherche. Exemple: https://www.google.com/search?q={q}";
+
+// Pattern Help Inline Strings
+"About Patterns" = "À propos des modèles";
+"Patterns use regular expressions (regex) to detect IDs and codes in your scanned images." = "Les modèles utilisent des expressions régulières (regex) pour détecter les IDs et codes dans vos images scannées.";
+"Examples:" = "Exemples:";
+"Pattern_Example_1" = "\"ABC-123\" correspond: FOO-456, BAR-789";
+"Pattern_Example_2" = "\"[A-Z]{3}\\d{4}\" correspond: ABC1234, XYZ5678";
+"Pattern_Example_3" = "\"\\d{10}\" correspond: 1234567890";
+"Pattern_Tips" = "💡 Activez uniquement les modèles dont vous avez besoin pour une meilleure précision. Les modèles intégrés peuvent être désactivés mais pas supprimés.";
+
+// Search Domain Help Inline Strings
+"About Search Domains" = "À propos des domaines de recherche";
+"Add your favorite search engines to look up detected IDs on the web." = "Ajoutez vos moteurs de recherche préférés pour rechercher les IDs détectés sur le web.";
+"URL Template Format:" = "Format du modèle d'URL:";
+"Domain_Format_Description" = "Utilisez {q} comme espace réservé pour la requête de recherche";
+"Domain_Example_1" = "Google: https://www.google.com/search?q={q}";
+"Domain_Example_2" = "Personnalisé: https://example.com/lookup?id={q}";
+"Domain_How_It_Works" = "💡 Lorsque vous recherchez \"ABC-123\", {q} sera remplacé par \"ABC-123\" dans l'URL.";

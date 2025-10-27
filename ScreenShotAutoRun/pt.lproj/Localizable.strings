@@ -89,3 +89,21 @@
 "Add Search Domain" = "Adicionar domínio de pesquisa";
 "Edit Search Domain" = "Editar domínio de pesquisa";
 "Use {q} as placeholder for the search query. Example: https://www.google.com/search?q={q}" = "Use {q} como espaço reservado para a consulta de pesquisa. Exemplo: https://www.google.com/search?q={q}";
+
+// Pattern Help Inline Strings
+"About Patterns" = "Sobre padrões";
+"Patterns use regular expressions (regex) to detect IDs and codes in your scanned images." = "Os padrões usam expressões regulares (regex) para detectar IDs e códigos em suas imagens digitalizadas.";
+"Examples:" = "Exemplos:";
+"Pattern_Example_1" = "\"ABC-123\" corresponde: FOO-456, BAR-789";
+"Pattern_Example_2" = "\"[A-Z]{3}\\d{4}\" corresponde: ABC1234, XYZ5678";
+"Pattern_Example_3" = "\"\\d{10}\" corresponde: 1234567890";
+"Pattern_Tips" = "💡 Ative apenas os padrões necessários para melhor precisão. Os padrões integrados podem ser desativados, mas não excluídos.";
+
+// Search Domain Help Inline Strings
+"About Search Domains" = "Sobre domínios de pesquisa";
+"Add your favorite search engines to look up detected IDs on the web." = "Adicione seus mecanismos de pesquisa favoritos para procurar IDs detectados na web.";
+"URL Template Format:" = "Formato do modelo de URL:";
+"Domain_Format_Description" = "Use {q} como espaço reservado para a consulta de pesquisa";
+"Domain_Example_1" = "Google: https://www.google.com/search?q={q}";
+"Domain_Example_2" = "Personalizado: https://example.com/lookup?id={q}";
+"Domain_How_It_Works" = "💡 Quando você pesquisa \"ABC-123\", {q} será substituído por \"ABC-123\" na URL.";

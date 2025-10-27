@@ -34,8 +34,21 @@ final class SearchDomainStore: ObservableObject {
         if let data = try? Data(contentsOf: url),
            let arr = try? JSONDecoder().decode([SearchDomain].self, from: data) {
             domains = arr
+            // Merge new built-in domains from app updates
+            mergeNewBuiltInDomains()
         } else {
             domains = Self.builtInDomains
+        }
+    }
+    
+    /// Merge new built-in domains that don't exist in saved data
+    private func mergeNewBuiltInDomains() {
+        let existingNames = Set(domains.map { $0.name })
+        let newDomains = Self.builtInDomains.filter { !existingNames.contains($0.name) }
+        
+        if !newDomains.isEmpty {
+            domains.append(contentsOf: newDomains)
+            save() // Save merged domains
         }
     }
 
