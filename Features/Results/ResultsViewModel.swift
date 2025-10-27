@@ -38,7 +38,15 @@ final class ResultsViewModel: ObservableObject {
         for p in allItems {
             for c in p.ids {
                 let searchURL = searchDomainStore.searchURL(for: c.value)?.absoluteString ?? ""
-                csv += "\(p.localId),\(c.value),\(formatter.string(from: p.createdAt)),\(p.category),\(searchURL)\n"
+                // Escape commas and quotes in CSV
+                let escapedId = c.value.replacingOccurrences(of: "\"", with: "\"\"")
+                let escapedCategory = p.category.replacingOccurrences(of: "\"", with: "\"\"")
+                
+                // Use HYPERLINK formula for clickable links in Excel/Google Sheets
+                let idHyperlink = searchURL.isEmpty ? escapedId : "=HYPERLINK(\"\(searchURL)\",\"\(escapedId)\")"
+                let urlHyperlink = searchURL.isEmpty ? "" : "=HYPERLINK(\"\(searchURL)\",\"Open Link\")"
+                
+                csv += "\(p.localId),\(idHyperlink),\(formatter.string(from: p.createdAt)),\"\(escapedCategory)\",\(urlHyperlink)\n"
             }
         }
         let url = FileManager.default.temporaryDirectory.appendingPathComponent("results.csv")
@@ -62,7 +70,15 @@ final class ResultsViewModel: ObservableObject {
             for p in await self.allItems {
                 for c in p.ids {
                     let searchURL = searchDomainStore.searchURL(for: c.value)?.absoluteString ?? ""
-                    csv += "\(p.localId),\(c.value),\(formatter.string(from: p.createdAt)),\(p.category),\(searchURL)\n"
+                    // Escape commas and quotes in CSV
+                    let escapedId = c.value.replacingOccurrences(of: "\"", with: "\"\"")
+                    let escapedCategory = p.category.replacingOccurrences(of: "\"", with: "\"\"")
+                    
+                    // Use HYPERLINK formula for clickable links in Excel/Google Sheets
+                    let idHyperlink = searchURL.isEmpty ? escapedId : "=HYPERLINK(\"\(searchURL)\",\"\(escapedId)\")"
+                    let urlHyperlink = searchURL.isEmpty ? "" : "=HYPERLINK(\"\(searchURL)\",\"Open Link\")"
+                    
+                    csv += "\(p.localId),\(idHyperlink),\(formatter.string(from: p.createdAt)),\"\(escapedCategory)\",\(urlHyperlink)\n"
                 }
             }
             
